@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{E8105AC0-88FC-46FB-AAE1-AAA5DA1D9C82}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Controllers/UserDataController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Models/Authentication/UserModel.cs">
     <Files>
       <File FileName="ar_dashboard/Controllers/WeatherForecastController.cs" Line="41" Column="22" />
       <File FileName="ar_dashboard/Controllers/UploadController.cs" Line="49" Column="14" />
@@ -9,21 +9,29 @@
       <File FileName="ar_dashboard/WeatherForecast.cs" Line="5" Column="18" />
       <File FileName="ar_dashboard/appsettings.json" Line="13" Column="42" />
       <File FileName="ar_dashboard/appsettings.Development.json" Line="15" Column="4" />
-      <File FileName="ar_dashboard/Controllers/MuseumController.cs" Line="50" Column="9" />
+      <File FileName="ar_dashboard/Controllers/MuseumController.cs" Line="65" Column="29" />
       <File FileName="ar_dashboard/Controllers/ArtifactController.cs" Line="50" Column="51" />
       <File FileName="ar_dashboard/Controllers/Asset3DController.cs" Line="13" Column="52" />
-      <File FileName="ar_dashboard/Models/User.cs" Line="19" Column="1" />
+      <File FileName="ar_dashboard/Models/User.cs" Line="21" Column="6" />
       <File FileName="ar_dashboard/Services/ICosmosDbService.cs" Line="13" Column="45" />
       <File FileName="ar_dashboard/Services/CosmosDbService.cs" Line="54" Column="14" />
-      <File FileName="ar_dashboard/Controllers/UserDataController.cs" Line="1" Column="1" />
+      <File FileName="ar_dashboard/Controllers/UserDataController.cs" Line="39" Column="51" />
+      <File FileName="ar_dashboard/Models/AR_Model.cs" />
+      <File FileName="ar_dashboard/Models/Artifact.cs" />
+      <File FileName="ar_dashboard/Models/Asset3D.cs" />
+      <File FileName="ar_dashboard/Models/Museum.cs" />
+      <File FileName="ar_dashboard/Models/Authentication/UserModel.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ar_dashboard" expanded="True">
             <Node name="ar_dashboard" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="UserDataController.cs" selected="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="Authentication" expanded="True">
+                  <Node name="UserModel.cs" selected="True" />
+                </Node>
               </Node>
               <Node name="Resources" expanded="True" />
               <Node name="Services" expanded="True" />
