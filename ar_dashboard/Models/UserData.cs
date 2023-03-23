@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ar_dashboard.Models
 {
-    public class User
+    public class UserData
     {
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

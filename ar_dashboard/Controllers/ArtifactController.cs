@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace ar_dashboard.Controllers
 {
-    [Route("api")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ArtifactController:ControllerBase
     {
@@ -39,14 +39,14 @@ namespace ar_dashboard.Controllers
         }
 
         [HttpGet]
-        [Route("museum/get-artifacts")]
+        [Route("get-all")]
         public IQueryable<Artifact> Get()
         {
             return _documentClient.CreateDocumentQuery<Artifact>(UriFactory.CreateDocumentCollectionUri(databaseId, collectionId),
                 new FeedOptions { MaxItemCount = 20});
         }
 
-        [Route("museum/get-artifacts")]
+        [Route("get")]
         public IQueryable<Artifact> Get(string id)
         {
             return _documentClient.CreateDocumentQuery<Artifact>(UriFactory.CreateDocumentCollectionUri(databaseId, collectionId),
@@ -54,7 +54,7 @@ namespace ar_dashboard.Controllers
         }
 
         [HttpPost]
-        [Route("museum/create-artifact")]
+        [Route("create")]
         public async Task<IActionResult> Post([FromBody] Artifact item)
         {
             var response = await _documentClient.CreateDocumentAsync(

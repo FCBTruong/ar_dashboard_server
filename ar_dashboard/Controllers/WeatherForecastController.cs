@@ -38,7 +38,7 @@ namespace ar_dashboard.Controllers
 
         [HttpGet]
         [Route("test")]
-        public str Test()
+        public string Test()
         {
             return "this is a test";
         }

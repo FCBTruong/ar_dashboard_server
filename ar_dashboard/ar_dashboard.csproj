@@ -11,14 +11,18 @@
     <None Remove="Microsoft.Azure.DocumentDB.Core" />
     <None Remove="Newtonsoft.Json" />
     <None Remove="Models\" />
+    <None Remove="Services\" />
+    <None Remove="Microsoft.Azure.Cosmos" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Resources\Images\" />
     <Folder Include="Models\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.19.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.32.2" />
   </ItemGroup>
 </Project>
