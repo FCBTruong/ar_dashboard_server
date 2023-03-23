@@ -35,5 +35,12 @@ namespace ar_dashboard.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet]
+        [Route("test")]
+        public str Test()
+        {
+            return "this is a test";
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace ar_dashboard.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MuseumController : Controller
+    public class MuseumController : ControllerBase
     {
         private readonly IDocumentClient _documentClient;
         readonly String databaseId;

@@ -11,8 +11,9 @@ using Microsoft.AspNetCore.StaticFiles;
 
 namespace ar_dashboard.Controllers
 {
-    [Route("api")]
-    public class UploadController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UploadController : ControllerBase
     {
         [HttpPost, DisableRequestSizeLimit]
         [Route("Upload")]

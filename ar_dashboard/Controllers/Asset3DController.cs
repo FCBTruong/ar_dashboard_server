@@ -10,7 +10,7 @@ namespace ar_dashboard.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Asset3DController : Controller
+    public class Asset3DController : ControllerBase
     {
       
     }
