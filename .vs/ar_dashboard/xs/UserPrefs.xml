@@ -1,0 +1,42 @@
+﻿<Properties StartupConfiguration="{E8105AC0-88FC-46FB-AAE1-AAA5DA1D9C82}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Controllers/Asset3DController.cs">
+    <Files>
+      <File FileName="ar_dashboard/Controllers/WeatherForecastController.cs" Line="21" Column="50" />
+      <File FileName="ar_dashboard/Controllers/UploadController.cs" Line="40" Column="18" />
+      <File FileName="ar_dashboard/Startup.cs" Line="43" Column="56" />
+      <File FileName="ar_dashboard/Properties/launchSettings.json" />
+      <File FileName="ar_dashboard/Program.cs" Line="1" Column="1" />
+      <File FileName="ar_dashboard/WeatherForecast.cs" />
+      <File FileName="ar_dashboard/appsettings.json" />
+      <File FileName="ar_dashboard/appsettings.Development.json" Line="10" Column="16" />
+      <File FileName="ar_dashboard/Models/AR_Model.cs" />
+      <File FileName="ar_dashboard/Controllers/MuseumController.cs" Line="52" Column="10" />
+      <File FileName="ar_dashboard/Models/Museum.cs" />
+      <File FileName="ar_dashboard/Models/User.cs" />
+      <File FileName="ar_dashboard/Controllers/ArtifactController.cs" Line="1" Column="1" />
+      <File FileName="ar_dashboard/Controllers/Asset3DController.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ar_dashboard" expanded="True">
+            <Node name="ar_dashboard" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="Asset3DController.cs" selected="True" />
+              </Node>
+              <Node name="Models" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.ar__dashboard PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
