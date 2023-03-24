@@ -17,6 +17,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using ar_dashboard.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ar_dashboard
 {
@@ -41,7 +44,26 @@ namespace ar_dashboard
 
             services.AddControllers();
 
-            services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
+                    };
+                });
+
+            // Db to manage user data
+            services.AddSingleton<ICosmosDbService>(InitializeUserDbInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
+            // Db to manage account user
+            services.AddSingleton<ICosmosDbService>(InitializeAuthenDbInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,16 +87,18 @@ namespace ar_dashboard
 
             app.UseAuthorization();
 
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
 
-        private static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(IConfigurationSection configurationSection)
+        private static async Task<CosmosDbService> InitializeUserDbInstanceAsync(IConfigurationSection configurationSection)
         {
             var databaseName = configurationSection["DatabaseName"];
-            var containerName = configurationSection["ContainerName"];
+            var containerName = configurationSection["UserContainerName"];
             var account = configurationSection["Account"];
             var key = configurationSection["Key"];
 
@@ -84,6 +108,21 @@ namespace ar_dashboard
 
             var cosmosDbService = new CosmosDbService(client, databaseName, containerName);
             return cosmosDbService;
+        }
+
+        private static async Task<CosmosDbService> InitializeAuthenDbInstanceAsync(IConfigurationSection configurationSection)
+        {
+            var databaseName = configurationSection["DatabaseName"];
+            var containerName = configurationSection["AuthenContainerName"];
+            var account = configurationSection["Account"];
+            var key = configurationSection["Key"];
+
+            var client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
+            var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
+            await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
+
+            var authenDbService = new CosmosDbService(client, databaseName, containerName);
+            return authenDbService;
         }
     }
 }

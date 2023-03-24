@@ -4,6 +4,7 @@ using ar_dashboard.Models;
 using Microsoft.Azure.Cosmos;
 using System.Collections.Generic;
 using System.Linq;
+using ar_dashboard.Models.Data;
 
 namespace ar_dashboard.Services
 {
@@ -19,21 +20,21 @@ namespace ar_dashboard.Services
             _container = cosmosDbClient.GetContainer(databaseName, containerName);
         }
 
-        public async Task AddAsync(UserData item)
+        public async Task AddAsync(ObjectData item)
         {
             await _container.CreateItemAsync(item, new PartitionKey(item.Id));
         }
 
         public async Task DeleteAsync(string id)
         {
-            await _container.DeleteItemAsync<UserData>(id, new PartitionKey(id));
+            await _container.DeleteItemAsync<ObjectData>(id, new PartitionKey(id));
         }
 
-        public async Task<UserData> GetAsync(string id)
+        public async Task<ObjectData> GetAsync(string id)
         {
             try
             {
-                var response = await _container.ReadItemAsync<UserData>(id, new PartitionKey(id));
+                var response = await _container.ReadItemAsync<ObjectData>(id, new PartitionKey(id));
                 return response.Resource;
             }
             catch (CosmosException) //For handling item not found and other exceptions
@@ -42,11 +43,11 @@ namespace ar_dashboard.Services
             }
         }
 
-        public async Task<IEnumerable<UserData>> GetMultipleAsync(string queryString)
+        public async Task<IEnumerable<ObjectData>> GetMultipleAsync(string queryString)
         {
-            var query = _container.GetItemQueryIterator<UserData>(new QueryDefinition(queryString));
+            var query = _container.GetItemQueryIterator<ObjectData>(new QueryDefinition(queryString));
 
-            var results = new List<UserData>();
+            var results = new List<ObjectData>();
             while (query.HasMoreResults)
             {
                 var response = await query.ReadNextAsync();
@@ -56,7 +57,7 @@ namespace ar_dashboard.Services
             return results;
         }
 
-        public async Task UpdateAsync(string id, UserData item)
+        public async Task UpdateAsync(string id, ObjectData item)
         {
             await _container.UpsertItemAsync(item, new PartitionKey(id));
         }

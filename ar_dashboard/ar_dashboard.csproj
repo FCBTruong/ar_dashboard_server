@@ -14,7 +14,9 @@
     <None Remove="Services\" />
     <None Remove="Microsoft.Azure.Cosmos" />
     <None Remove="Models\Data\" />
-    <None Remove="Models\Authentication\" />
+    <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <None Remove="Models\ClientSendForm\" />
+    <None Remove="Models\ClientReceiveForm\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -22,11 +24,13 @@
     <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="Models\Data\" />
-    <Folder Include="Models\Authentication\" />
+    <Folder Include="Models\ClientSendForm\" />
+    <Folder Include="Models\ClientReceiveForm\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.19.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.32.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.16" />
   </ItemGroup>
 </Project>

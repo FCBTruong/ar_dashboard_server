@@ -60,3 +60,10 @@
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/System.Security.Principal.Windows.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/System.Security.Principal.Windows.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp3.1/System.Windows.Extensions.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Logging.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll

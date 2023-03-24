@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ar_dashboard.Models;
+using ar_dashboard.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
@@ -14,47 +15,55 @@ namespace ar_dashboard.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MuseumController : ControllerBase
+    public class MuseumsController : ControllerBase
     {
-        private readonly IDocumentClient _documentClient;
-        readonly string databaseId;
-        readonly string collectionId;
+        private readonly ICosmosDbService _cosmosDbService;
 
-        public IConfiguration Configuration { get; set; }
-        public MuseumController(IDocumentClient documentClient, IConfiguration configuration)
+        public MuseumsController(ICosmosDbService cosmosDbService)
         {
-            _documentClient = documentClient;
-            Configuration = configuration;
-
-            databaseId = Configuration["DatabaseId"];
-            collectionId = "museums";
-
-        //    BuildCollection().Wait();
+            _cosmosDbService = cosmosDbService ?? throw new ArgumentNullException(nameof(cosmosDbService));
         }
 
-       
-  
-
-
-
-        [HttpPost]
-        [Route("create")]
-        public async Task<IActionResult> CreateMuseum()
+        // GET api/museums/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
         {
             try
             {
-                string userId = "truong123"; // test
-                var userData = _documentClient.CreateDocumentQuery<UserData>(UriFactory.CreateDocumentCollectionUri(databaseId, userId));
+                var userData = (UserData) await _cosmosDbService.GetAsync(id);
 
-                var newMuseum = new Museum();
-        
+                if (userData == null)
+                {
+                    return BadRequest("user is null");
+                }
 
-                await _documentClient.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(databaseId),
-                new DocumentCollection { Id = userId });
+                var museum = userData.Museums.Where((m) => m.Id == id);
+                if(museum == null)
+                {
+                    return BadRequest("museum is null");
+                }
+                return Ok(museum);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
+        }
 
-                var response = await _documentClient.CreateDocumentAsync(
-                    UriFactory.CreateDocumentCollectionUri(databaseId, userId), newMuseum);
+        // POST api/museums/
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Create([FromBody] Museum item)
+        {
+            try
+            {
+                /* item.Id = Guid.NewGuid().ToString();
+
+                 var userData = await _cosmosDbService.GetAsync(id);
+
+                 userData.mu
+                 await _cosmosDbService.AddAsync(item); */
                 return Ok();
+
             }
             catch (Exception e)
             {
