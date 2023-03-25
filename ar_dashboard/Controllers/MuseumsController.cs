@@ -17,9 +17,9 @@ namespace ar_dashboard.Controllers
     [ApiController]
     public class MuseumsController : ControllerBase
     {
-        private readonly ICosmosDbService _cosmosDbService;
+        private readonly IUserDbService _cosmosDbService;
 
-        public MuseumsController(ICosmosDbService cosmosDbService)
+        public MuseumsController(IUserDbService cosmosDbService)
         {
             _cosmosDbService = cosmosDbService ?? throw new ArgumentNullException(nameof(cosmosDbService));
         }
@@ -30,7 +30,7 @@ namespace ar_dashboard.Controllers
         {
             try
             {
-                var userData = (UserData) await _cosmosDbService.GetAsync(id);
+                var userData =  await _cosmosDbService.GetAsync(id);
 
                 if (userData == null)
                 {

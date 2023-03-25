@@ -20,6 +20,7 @@ using ar_dashboard.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ar_dashboard.Controllers;
 
 namespace ar_dashboard
 {
@@ -60,10 +61,7 @@ namespace ar_dashboard
                     };
                 });
 
-            // Db to manage user data
-            services.AddSingleton<ICosmosDbService>(InitializeUserDbInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
-            // Db to manage account user
-            services.AddSingleton<ICosmosDbService>(InitializeAuthenDbInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
+            services.AddSingleton<DatabaseController>(new DatabaseController(Configuration.GetSection("CosmosDb")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,34 +93,6 @@ namespace ar_dashboard
             });
         }
 
-        private static async Task<CosmosDbService> InitializeUserDbInstanceAsync(IConfigurationSection configurationSection)
-        {
-            var databaseName = configurationSection["DatabaseName"];
-            var containerName = configurationSection["UserContainerName"];
-            var account = configurationSection["Account"];
-            var key = configurationSection["Key"];
-
-            var client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
-            var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
-            await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
-
-            var cosmosDbService = new CosmosDbService(client, databaseName, containerName);
-            return cosmosDbService;
-        }
-
-        private static async Task<CosmosDbService> InitializeAuthenDbInstanceAsync(IConfigurationSection configurationSection)
-        {
-            var databaseName = configurationSection["DatabaseName"];
-            var containerName = configurationSection["AuthenContainerName"];
-            var account = configurationSection["Account"];
-            var key = configurationSection["Key"];
-
-            var client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
-            var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
-            await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
-
-            var authenDbService = new CosmosDbService(client, databaseName, containerName);
-            return authenDbService;
-        }
+       
     }
 }

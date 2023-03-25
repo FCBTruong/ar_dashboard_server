@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using ar_dashboard.Models.Data;
 
 namespace ar_dashboard.Models
 {
-    public class UserData :ObjectData
+    public class UserData
     {
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "email")]

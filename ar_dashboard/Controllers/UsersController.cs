@@ -15,31 +15,42 @@ namespace ar_dashboard.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ICosmosDbService _cosmosDbService;
+        private readonly IUserDbService _userDbService;
         private readonly IConfiguration _configuration;
 
-        public UsersController(ICosmosDbService cosmosDbService, IConfiguration configuration)
+        public UsersController(DatabaseController databaseController, IConfiguration configuration)
         {
-            _cosmosDbService = cosmosDbService ?? throw new ArgumentNullException(nameof(cosmosDbService));
+            _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
             _configuration = configuration;
         }
 
-        // GET api/items
+        // GET api/users
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> List()
         {
-            return Ok(await _cosmosDbService.GetMultipleAsync("SELECT * FROM c"));
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claim = identity.Claims.ToList();
+            var role = ushort.Parse(claim[2].Value);
+            if(role != (ushort)UserRole.ADMIN)
+            {
+                return Unauthorized("Only admin has right to get list users");
+            }
+            return Ok(await _userDbService.GetMultipleAsync("SELECT * FROM c"));
         }
 
-        // GET api/items/5
+        // GET api/users/ user token to get userId
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
+        [Authorize]
+        public async Task<IActionResult> Get()
         {
-            return Ok("test");
-           // return Ok(await _cosmosDbService.GetAsync(id));
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claim = identity.Claims.ToList();
+            var id = claim[0].Value;
+            return Ok(await _userDbService.GetAsync(id));
         }
 
-        // POST api/items
+        // POST api/users
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserData item)
@@ -48,23 +59,25 @@ namespace ar_dashboard.Controllers
             IList<Claim> claim = identity.Claims.ToList();
 
             item.Id = Guid.NewGuid().ToString();
-            await _cosmosDbService.AddAsync(item);
+            await _userDbService.AddAsync(item);
             return CreatedAtAction(nameof(Get), new { id = item.Id }, item);
         }
 
-        // PUT api/items/5
+        // PUT api/users/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> Edit([FromBody] UserData item)
         {
-            await _cosmosDbService.UpdateAsync(item.Id, item);
+            //item.Id = 
+            await _userDbService.UpdateAsync(item.Id, item);
             return NoContent();
         }
 
-        // DELETE api/items/5
+        // DELETE api/users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            await _cosmosDbService.DeleteAsync(id);
+            await _userDbService.DeleteAsync(id);
             return NoContent();
         }
     }

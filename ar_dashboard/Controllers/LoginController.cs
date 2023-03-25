@@ -20,83 +20,83 @@ namespace ar_dashboard.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly ICosmosDbService _userDbService;
-        private readonly ICosmosDbService _authenDbService;
+        private readonly IUserDbService _userDbService;
+        private readonly IAuthenDbService _authenDbService;
         private readonly IConfiguration _configuration;
-        public LoginController(ICosmosDbService userDbService, ICosmosDbService authenDbService, IConfiguration configuration)
+        public LoginController(DatabaseController databaseController, IConfiguration configuration)
         {
-            _userDbService = userDbService ?? throw new ArgumentNullException(nameof(userDbService));
-            _authenDbService = authenDbService ?? throw new ArgumentNullException(nameof(authenDbService));
+            _userDbService = databaseController.UserDbService;
+            _authenDbService = databaseController.AuthenDbService;
             _configuration = configuration;
         }
 
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginForm loginForm)
         {
-            string username = loginForm.UserName;
-            string password = loginForm.Password;
-            if (username == null || password == null) return BadRequest("Not Null " + username + password);
-
-            if (!RegexChecker.checkAuthString(username)) return BadRequest("Valid username");
-            if (!RegexChecker.checkAuthString(password)) return BadRequest("Valid password");
-
-            UserModel login = new UserModel();
-            login.UserName = username;
-            login.Password = password;
-            IActionResult response = Unauthorized();
-
-
-            var user = await AuthenticateUser(login);
-
-            if (user != null)
+            try
             {
-                var tokenStr = GenerateJSONWebToken(user);
-                response = Ok(new { token = tokenStr });
+                string username = loginForm.UserName;
+                string password = loginForm.Password;
+                if (username == null || password == null) return BadRequest("Not Null " + username + password);
+
+                if (!RegexChecker.checkAuthString(username)) return BadRequest("Invalid username");
+                if (!RegexChecker.checkAuthString(password)) return BadRequest("Invalid password");
+
+                AuthenModel login = new AuthenModel();
+                login.UserName = username;
+                login.Password = password;
+                IActionResult response = Unauthorized();
+
+
+                var user = await AuthenticateUser(login);
+
+                if (user != null)
+                {
+                    var tokenStr = GenerateJSONWebToken(user);
+                    response = Ok(new { token = tokenStr });
+                }
+                return response;
             }
-            return response;
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
         }
 
-        private async Task<UserModel> AuthenticateUser(UserModel login)
+        private async Task<AuthenModel> AuthenticateUser(AuthenModel login)
         {
-            UserModel user = null;
+            AuthenModel user = null;
 
             // find user in database and compare password input with password db
-            /* var accs = null; // try to get db user _context.Auths.Where(user => user.UserName == login.UserName).ToList();
-             if (accs == null || accs.Count == 0) return user;
-             Auths acc = accs[0];
+            var accs = (await _authenDbService.GetMultipleAsync($"SELECT * FROM c WHERE  c.username = '{login.UserName}'")).ToArray();
+            if (accs.Length == 0) return user;
+            var acc = accs[0];
 
-             if (!HashPassword.VerifyHashedPassword(acc.Password, login.Password)) return user;
-            */
-
-            user = (UserModel) await _authenDbService.GetAsync(login.UserId);
-           /* var role = (from u in _context.Users
-                        join r
-in _context.Roles on u.IdRole equals r.IdRole
-                        where u.IdUser == acc.IdUser
-                        select r.RoleName).ToList();
-            user = new UserModel
+            if (!HashPassword.VerifyHashedPassword(acc.Password, login.Password)) return user;
+       
+            user = new AuthenModel
             {
-                IdUser = acc.IdUser,
+                Id = acc.Id,
                 UserName = acc.UserName,
-                EmailAddress = acc.Email,
+                Email = acc.Email,
                 Password = acc.Password,
-                Role = role[0].ToString(),
-            };*/
+                Role = acc.Role,
+            };
 
             return user;
         }
 
-        private string GenerateJSONWebToken(UserModel userinfo)
+        private string GenerateJSONWebToken(AuthenModel userinfo)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
+                new Claim(JwtRegisteredClaimNames.NameId, userinfo.Id),
                 new Claim(JwtRegisteredClaimNames.Sub, userinfo.UserName),
                 new Claim(JwtRegisteredClaimNames.Sub, userinfo.Role.ToString()),
-                new Claim(JwtRegisteredClaimNames.NameId, userinfo.UserId),
-                new Claim(JwtRegisteredClaimNames.Email, userinfo.EmailAddress),
+                new Claim(JwtRegisteredClaimNames.Email, userinfo.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
@@ -113,7 +113,7 @@ in _context.Roles on u.IdRole equals r.IdRole
 
         [Authorize]
         [HttpPost]
-        [Route("TestAuth")]
+        [Route("test")]
         public string Post()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -123,16 +123,10 @@ in _context.Roles on u.IdRole equals r.IdRole
             return "Welcom to: " + userName + " " + role;
         }
 
-        [HttpGet("GetValue")]
-        [Route("api/mmmpost")]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "Value1", "Value2", "Value3" };
-        }
 
         [Authorize]
         [HttpPost]
-        [Route("RefreshToken")]
+        [Route("refresh-token")]
         public ActionResult<IEnumerable<string>> RefreshToken(string oldToken)
         {
             try
@@ -141,13 +135,13 @@ in _context.Roles on u.IdRole equals r.IdRole
                 IList<Claim> claim = identity.Claims.ToList();
                 var userName = claim[0].Value;
                 var role = claim[1].Value;
-                UserModel user = new UserModel
+                AuthenModel user = new AuthenModel
                 {
-                    UserId = claim[2].Value,
+                    Id = claim[2].Value,
                     UserName = claim[0].Value,
-                    EmailAddress = claim[3].Value,
+                    Email = claim[3].Value,
                     Password = "",
-                    Role = Int32.Parse(claim[1].Value),
+                    Role = ushort.Parse(claim[1].Value),
                 };
 
                 var newToken = GenerateJSONWebToken(user);
