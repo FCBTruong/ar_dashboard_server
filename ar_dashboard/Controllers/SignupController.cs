@@ -76,7 +76,7 @@ namespace Web_BTL_Backend.Controllers
                 Password = signupForm.Password,
                 Id = Guid.NewGuid().ToString(),
                 Email = signupForm.Email,
-                Role = (ushort) UserRole.ADMIN
+                Role = (ushort) UserRole.USER
             };
 
             // save to db

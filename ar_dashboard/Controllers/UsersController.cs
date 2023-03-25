@@ -24,8 +24,8 @@ namespace ar_dashboard.Controllers
             _configuration = configuration;
         }
 
-        // GET api/users
-        [HttpGet]
+        // GET api/users/get-list
+        [HttpGet("get-list")]
         [Authorize]
         public async Task<IActionResult> List()
         {
@@ -40,45 +40,54 @@ namespace ar_dashboard.Controllers
         }
 
         // GET api/users/ user token to get userId
-        [HttpGet("{id}")]
         [Authorize]
+        [HttpGet("get-info")]
         public async Task<IActionResult> Get()
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claim = identity.Claims.ToList();
-            var id = claim[0].Value;
-            return Ok(await _userDbService.GetAsync(id));
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var id = claim[0].Value;
+
+                var user = await GetUserData(id);
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
         }
 
-        // POST api/users
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UserData item)
+        private async Task<UserData> GetUserData(string id)
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claim = identity.Claims.ToList();
-
-            item.Id = Guid.NewGuid().ToString();
-            await _userDbService.AddAsync(item);
-            return CreatedAtAction(nameof(Get), new { id = item.Id }, item);
+            // get from database
+            var user = await _userDbService.GetAsync(id);
+            if(user == null)
+            {
+                // user not created in db yet -> create new
+                user = new UserData();
+                user.Id = id;
+                await _userDbService.AddAsync(user);
+            }
+            return user;
         }
 
-        // PUT api/users/5
-        [HttpPut("{id}")]
+
+        // PUT api/users/edit
+        [HttpPut("edit")]
         [Authorize]
         public async Task<IActionResult> Edit([FromBody] UserData item)
         {
-            //item.Id = 
-            await _userDbService.UpdateAsync(item.Id, item);
-            return NoContent();
-        }
-
-        // DELETE api/users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
-        {
-            await _userDbService.DeleteAsync(id);
-            return NoContent();
+            try
+            {
+                await _userDbService.UpdateAsync(item.Id, item);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
         }
     }
 }

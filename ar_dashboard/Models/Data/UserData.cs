@@ -15,6 +15,14 @@ namespace ar_dashboard.Models
         public List<Museum> Museums { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "role")]
         public UserRole Role { get; set; }
+
+        public UserData()
+        {
+            Name = "default";
+            Email = "default";
+            Museums = new List<Museum>();
+            Role = UserRole.USER;
+        }
     }
 
     public enum UserRole: ushort

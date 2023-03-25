@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ar_dashboard.Models;
+using ar_dashboard.Models.ClientSendForm;
 using ar_dashboard.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
@@ -17,20 +20,21 @@ namespace ar_dashboard.Controllers
     [ApiController]
     public class MuseumsController : ControllerBase
     {
-        private readonly IUserDbService _cosmosDbService;
+        private readonly IUserDbService _userDbService;
 
-        public MuseumsController(IUserDbService cosmosDbService)
+        public MuseumsController(DatabaseController databaseController)
         {
-            _cosmosDbService = cosmosDbService ?? throw new ArgumentNullException(nameof(cosmosDbService));
+            _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
         }
 
         // GET api/museums/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(string id)
         {
             try
             {
-                var userData =  await _cosmosDbService.GetAsync(id);
+                var userData =  await _userDbService.GetAsync(id);
 
                 if (userData == null)
                 {
@@ -51,17 +55,35 @@ namespace ar_dashboard.Controllers
         }
 
         // POST api/museums/
-        [HttpPost("{id}")]
-        public async Task<IActionResult> Create([FromBody] Museum item)
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Create([FromBody] CreateMuseumForm museumForm)
         {
             try
             {
-                /* item.Id = Guid.NewGuid().ToString();
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var userId = claim[0].Value;
 
-                 var userData = await _cosmosDbService.GetAsync(id);
 
-                 userData.mu
-                 await _cosmosDbService.AddAsync(item); */
+                if(museumForm == null || museumForm.Name.Length == 0)
+                {
+                    return BadRequest("error with parameters");
+                }
+                var museum = new Museum();
+                museum.Name = museumForm.Name;
+
+                var userData = await _userDbService.GetAsync(userId);
+
+                if(userData == null)
+                {
+                    return BadRequest("user data is null");
+                }
+
+                userData.Museums.Add(museum);
+
+                // save to db
+                await _userDbService.UpdateAsync(userId, userData);
                 return Ok();
 
             }
