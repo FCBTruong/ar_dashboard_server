@@ -5,8 +5,13 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ar_dashboard.Models;
+using ar_dashboard.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Configuration;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,14 +21,16 @@ namespace ar_dashboard.Controllers
     [ApiController]
     public class Asset3DController : ControllerBase
     {
-        public Asset3DController()
+        private readonly IUserDbService _userDbService;
+        public Asset3DController(DatabaseController databaseController, IConfiguration configuration)
         {
+            _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
 
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateAsset3D()
+        public async Task<IActionResult> CreateAsset3D(IFormFile file)
         {
             try
             {
@@ -31,7 +38,13 @@ namespace ar_dashboard.Controllers
                 IList<Claim> claim = identity.Claims.ToList();
                 var userId = claim[0].Value;
 
-                var file = Request.Form.Files[0];
+                // after load success to storage
+                var userData = await _userDbService.GetAsync(userId);
+                if (userData == null)
+                {
+                    return BadRequest("user data is null");
+                }
+
                 var folderName = Path.Combine("Resources/Model3D", userId);
                 if (!Directory.Exists(folderName))
                 {
@@ -42,8 +55,9 @@ namespace ar_dashboard.Controllers
 
                 if (file.Length > 0)
                 {
-                    var fileName = Guid.NewGuid().ToString();
-                    string extension = System.IO.Path.GetExtension(file.FileName);
+                    var assetId = Guid.NewGuid().ToString();
+                    var fileName = assetId + "";
+                    string extension = Path.GetExtension(file.FileName);
                     fileName += extension;
                     var fullPath = Path.Combine(pathToSave, fileName);
                     var dbPath = Path.Combine(folderName, fileName); // save to database
@@ -52,12 +66,50 @@ namespace ar_dashboard.Controllers
                     {
                         file.CopyTo(stream);
                     }
+
+                    Asset3D asset = new Asset3D();
+
+                    // fix tam
+                    asset.Url = "https://localhost:5001/api/asset3d/" + userId + "/" + fileName;
+                    asset.Id = assetId;
+
+                    // save data to db
+                    userData.Assets.Add(asset);
+
+                    await _userDbService.UpdateAsync(userId, userData);
+
+
                     return Ok(new { dbPath });
                 }
                 else
                 {
                     return BadRequest();
                 }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
+        }
+
+
+        [HttpGet("{userId}/{fileName}")]
+        public async Task<IActionResult> downloadFile(string userId, string fileName)
+        {
+            try
+            {
+                var folderName = Path.Combine("Resources/Model3D", userId);
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var filepath = Path.Combine(pathToSave, fileName);
+
+                var provider = new FileExtensionContentTypeProvider();
+                if (!provider.TryGetContentType(filepath, out var contentType))
+                {
+                    contentType = "application/octest-stream";
+                }
+
+                var bytes = await System.IO.File.ReadAllBytesAsync(filepath);
+                return File(bytes, contentType, Path.GetFileName(filepath));
             }
             catch (Exception e)
             {

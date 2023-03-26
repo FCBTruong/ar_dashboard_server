@@ -15,6 +15,8 @@ namespace ar_dashboard.Models
         public List<Museum> Museums { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "role")]
         public UserRole Role { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "assets")]
+        public List<Asset3D> Assets { get; set; }
 
         public UserData()
         {
@@ -22,6 +24,7 @@ namespace ar_dashboard.Models
             Email = "default";
             Museums = new List<Museum>();
             Role = UserRole.USER;
+            Assets = new List<Asset3D>();
         }
     }
 
