@@ -15,5 +15,10 @@ namespace ar_dashboard.Models
         public AR_Model ModelAr { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "audio")]
         public string Audio { get; set; }
+
+        public Artifact()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
     }
 }

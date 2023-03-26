@@ -17,6 +17,7 @@
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <None Remove="Models\ClientSendForm\" />
     <None Remove="Models\ClientReceiveForm\" />
+    <None Remove="Resources\Model3D\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -26,6 +27,7 @@
     <Folder Include="Models\Data\" />
     <Folder Include="Models\ClientSendForm\" />
     <Folder Include="Models\ClientReceiveForm\" />
+    <Folder Include="Resources\Model3D\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

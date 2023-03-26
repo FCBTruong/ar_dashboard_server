@@ -84,7 +84,7 @@ namespace ar_dashboard.Controllers
 
                 // save to db
                 await _userDbService.UpdateAsync(userId, userData);
-                return Ok();
+                return Ok(museum);
 
             }
             catch (Exception e)

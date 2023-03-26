@@ -1,25 +1,32 @@
 ﻿<Properties StartupConfiguration="{E8105AC0-88FC-46FB-AAE1-AAA5DA1D9C82}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Models/ClientSendForm/CreateMuseumForm.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Models/Data/AR_Model.cs">
     <Files>
-      <File FileName="ar_dashboard/Controllers/SignupController.cs" Line="44" Column="50" />
-      <File FileName="ar_dashboard/Controllers/UsersController.cs" Line="52" Column="1" />
-      <File FileName="ar_dashboard/Services/IUserDbService.cs" Line="1" Column="1" />
-      <File FileName="ar_dashboard/Services/UserDbService.cs" Line="47" Column="63" />
-      <File FileName="ar_dashboard/appsettings.Development.json" Line="1" Column="1" />
-      <File FileName="ar_dashboard/Program.cs" Line="16" Column="1" />
-      <File FileName="ar_dashboard/Models/Authorization/AuthenModel.cs" Line="10" Column="45" />
-      <File FileName="ar_dashboard/Controllers/LoginController.cs" Line="96" Column="57" />
-      <File FileName="ar_dashboard/Models/Data/UserData.cs" Line="24" Column="34" />
-      <File FileName="ar_dashboard/appsettings.json" Line="1" Column="1" />
-      <File FileName="ar_dashboard/Startup.cs" Line="86" Column="34" />
-      <File FileName="ar_dashboard/Controllers/UploadController.cs" Line="49" Column="14" />
-      <File FileName="ar_dashboard/Controllers/AdminController.cs" Line="36" Column="68" />
-      <File FileName="ar_dashboard/Models/ClientSendForm/SignupForm.cs" Line="1" Column="1" />
-      <File FileName="ar_dashboard/Controllers/ArtifactController.cs" Line="1" Column="1" />
-      <File FileName="ar_dashboard/Controllers/MuseumsController.cs" Line="59" Column="49" />
-      <File FileName="ar_dashboard/Models/Data/Museum.cs" Line="19" Column="46" />
-      <File FileName="ar_dashboard/Models/ClientSendForm/CreateMuseumForm.cs" Line="8" Column="67" />
-      <File FileName="ar_dashboard/Models/ClientSendForm/LoginForm.cs" Line="6" Column="66" />
+      <File FileName="ar_dashboard/Controllers/SignupController.cs" Line="79" Column="46" />
+      <File FileName="ar_dashboard/Controllers/UsersController.cs" />
+      <File FileName="ar_dashboard/Services/IUserDbService.cs" />
+      <File FileName="ar_dashboard/Services/UserDbService.cs" />
+      <File FileName="ar_dashboard/appsettings.Development.json" />
+      <File FileName="ar_dashboard/Program.cs" />
+      <File FileName="ar_dashboard/Models/Authorization/AuthenModel.cs" />
+      <File FileName="ar_dashboard/Controllers/LoginController.cs" />
+      <File FileName="ar_dashboard/Models/Data/UserData.cs" />
+      <File FileName="ar_dashboard/appsettings.json" />
+      <File FileName="ar_dashboard/Startup.cs" />
+      <File FileName="ar_dashboard/Controllers/UploadController.cs" />
+      <File FileName="ar_dashboard/Controllers/AdminController.cs" />
+      <File FileName="ar_dashboard/Models/ClientSendForm/SignupForm.cs" />
+      <File FileName="ar_dashboard/Controllers/MuseumsController.cs" />
+      <File FileName="ar_dashboard/Models/Data/Museum.cs" />
+      <File FileName="ar_dashboard/Models/ClientSendForm/CreateMuseumForm.cs" />
+      <File FileName="ar_dashboard/Models/ClientSendForm/LoginForm.cs" />
+      <File FileName="ar_dashboard/Models/ClientSendForm/CreateArtifactForm.cs" />
+      <File FileName="ar_dashboard/Models/Data/Artifact.cs" Line="15" Column="24" />
+      <File FileName="ar_dashboard/Controllers/DatabaseController.cs" />
+      <File FileName="ar_dashboard/Controllers/Asset3DController.cs" />
+      <File FileName="ar_dashboard/Controllers/WeatherForecastController.cs" />
+      <File FileName="ar_dashboard/Controllers/ArtifactsController.cs" Line="145" Column="27" />
+      <File FileName="ar_dashboard/Models/Data/Asset3D.cs" Line="1" Column="1" />
+      <File FileName="ar_dashboard/Models/Data/AR_Model.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -29,10 +36,10 @@
               <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True">
                 <Node name="Authorization" expanded="True" />
-                <Node name="ClientSendForm" expanded="True">
-                  <Node name="CreateMuseumForm.cs" selected="True" />
+                <Node name="ClientSendForm" expanded="True" />
+                <Node name="Data" expanded="True">
+                  <Node name="AR_Model.cs" selected="True" />
                 </Node>
-                <Node name="Data" expanded="True" />
               </Node>
               <Node name="Resources" expanded="True" />
               <Node name="Services" expanded="True" />

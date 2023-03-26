@@ -104,7 +104,7 @@ namespace ar_dashboard.Controllers
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Issuer"],
                 claims,
-                expires: DateTime.Now.AddMinutes(60),
+                expires: DateTime.Now.AddMinutes(2880),
                 signingCredentials: credentials
                 );
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
