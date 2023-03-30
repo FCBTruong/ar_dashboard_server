@@ -72,6 +72,16 @@ namespace ar_dashboard
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(builder => builder
+            .WithOrigins("http://127.0.0.1:5500",
+            "http://127.0.0.1:3000",
+            "http://127.0.0.1:3001",
+            "http://localhost:3000",
+            "http://localhost:3001")
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .AllowAnyHeader());
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseStaticFiles(

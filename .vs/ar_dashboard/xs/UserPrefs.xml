@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{E8105AC0-88FC-46FB-AAE1-AAA5DA1D9C82}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Models/Data/AR_Model.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Startup.cs">
     <Files>
       <File FileName="ar_dashboard/Controllers/SignupController.cs" Line="79" Column="46" />
       <File FileName="ar_dashboard/Controllers/UsersController.cs" />
@@ -11,7 +11,7 @@
       <File FileName="ar_dashboard/Controllers/LoginController.cs" />
       <File FileName="ar_dashboard/Models/Data/UserData.cs" />
       <File FileName="ar_dashboard/appsettings.json" />
-      <File FileName="ar_dashboard/Startup.cs" />
+      <File FileName="ar_dashboard/Startup.cs" Line="80" Column="35" />
       <File FileName="ar_dashboard/Controllers/UploadController.cs" />
       <File FileName="ar_dashboard/Controllers/AdminController.cs" />
       <File FileName="ar_dashboard/Models/ClientSendForm/SignupForm.cs" />
@@ -20,13 +20,13 @@
       <File FileName="ar_dashboard/Models/ClientSendForm/CreateMuseumForm.cs" />
       <File FileName="ar_dashboard/Models/ClientSendForm/LoginForm.cs" />
       <File FileName="ar_dashboard/Models/ClientSendForm/CreateArtifactForm.cs" />
-      <File FileName="ar_dashboard/Models/Data/Artifact.cs" Line="15" Column="24" />
+      <File FileName="ar_dashboard/Models/Data/Artifact.cs" />
       <File FileName="ar_dashboard/Controllers/DatabaseController.cs" />
       <File FileName="ar_dashboard/Controllers/Asset3DController.cs" />
       <File FileName="ar_dashboard/Controllers/WeatherForecastController.cs" />
-      <File FileName="ar_dashboard/Controllers/ArtifactsController.cs" Line="145" Column="27" />
-      <File FileName="ar_dashboard/Models/Data/Asset3D.cs" Line="1" Column="1" />
-      <File FileName="ar_dashboard/Models/Data/AR_Model.cs" Line="1" Column="1" />
+      <File FileName="ar_dashboard/Controllers/ArtifactsController.cs" />
+      <File FileName="ar_dashboard/Models/Data/Asset3D.cs" />
+      <File FileName="ar_dashboard/Models/Data/AR_Model.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -37,13 +37,14 @@
               <Node name="Models" expanded="True">
                 <Node name="Authorization" expanded="True" />
                 <Node name="ClientSendForm" expanded="True" />
-                <Node name="Data" expanded="True">
-                  <Node name="AR_Model.cs" selected="True" />
-                </Node>
+                <Node name="Data" expanded="True" />
               </Node>
-              <Node name="Resources" expanded="True" />
+              <Node name="Resources" expanded="True">
+                <Node name="Model3D" expanded="True" />
+              </Node>
               <Node name="Services" expanded="True" />
               <Node name="appsettings.json" expanded="True" />
+              <Node name="Startup.cs" selected="True" />
             </Node>
           </Node>
         </State>

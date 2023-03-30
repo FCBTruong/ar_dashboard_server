@@ -9,6 +9,8 @@ namespace ar_dashboard.Models
         public string Id { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "introduction")]
+        public string Introduction { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "artifacts")]
         public List<Artifact> Artifacts { get; set; }
 

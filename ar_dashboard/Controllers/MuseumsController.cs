@@ -72,6 +72,7 @@ namespace ar_dashboard.Controllers
                 }
                 var museum = new Museum();
                 museum.Name = museumForm.Name;
+                museum.Introduction = museumForm.Introduction;
 
                 var userData = await _userDbService.GetAsync(userId);
 
