@@ -93,5 +93,48 @@ namespace ar_dashboard.Controllers
                 return StatusCode(500, $"Internel server error: {e}");
             }
         }
+
+        // DELETE api/museums/
+        [HttpDelete("{museumId}")]
+        [Authorize]
+        public async Task<IActionResult> Delete(string museumId)
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var userId = claim[0].Value;
+
+
+                if (museumId == "null" || museumId.Length < 1)
+                {
+                    return BadRequest("error with parameters");
+                }
+               
+                var userData = await _userDbService.GetAsync(userId);
+
+                if (userData == null)
+                {
+                    return BadRequest("user data is null");
+                }
+
+                int idxMuseum = userData.Museums.FindIndex(m => m.Id == museumId);
+                if(idxMuseum == -1)
+                {
+                    return BadRequest("No museum to delete");
+                }
+
+                userData.Museums.RemoveAt(idxMuseum);
+
+                // save to db
+                await _userDbService.UpdateAsync(userId, userData);
+                return Ok(userData);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
+        }
     }
 }

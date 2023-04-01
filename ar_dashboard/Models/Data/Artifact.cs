@@ -19,6 +19,7 @@ namespace ar_dashboard.Models
         public Artifact()
         {
             Id = Guid.NewGuid().ToString();
+            ModelAr = new AR_Model();
         }
     }
 }

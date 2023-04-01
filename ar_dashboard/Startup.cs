@@ -43,6 +43,11 @@ namespace ar_dashboard
                 o.MemoryBufferThreshold = int.MaxValue;
             });
 
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.MaxRequestBodySize = int.MaxValue;
+            });
+
             services.AddControllers();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

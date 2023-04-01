@@ -30,6 +30,7 @@ namespace ar_dashboard.Controllers
 
         [Authorize]
         [HttpPost]
+        [RequestSizeLimit(737280000)]
         public async Task<IActionResult> CreateAsset3D(IFormFile file)
         {
             try
@@ -58,6 +59,11 @@ namespace ar_dashboard.Controllers
                     var assetId = Guid.NewGuid().ToString();
                     var fileName = assetId + "";
                     string extension = Path.GetExtension(file.FileName);
+
+                    if(extension != ".glb")
+                    {
+                        return BadRequest("model 3d not in valid format (only support glb), current is " + extension);
+                    }
                     fileName += extension;
                     var fullPath = Path.Combine(pathToSave, fileName);
                     var dbPath = Path.Combine(folderName, fileName); // save to database
@@ -79,7 +85,7 @@ namespace ar_dashboard.Controllers
                     await _userDbService.UpdateAsync(userId, userData);
 
 
-                    return Ok(new { dbPath });
+                    return Ok(new { asset });
                 }
                 else
                 {

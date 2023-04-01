@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using ar_dashboard.Models.Data;
 
 namespace ar_dashboard.Models
 {
@@ -10,15 +11,25 @@ namespace ar_dashboard.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "modelAsset")]
         public Asset3D ModelAsset { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "scale")]
-        public float Scale { get; set; }
+        public SerializedVector3 Scale { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "position")]
-        public Vector3 Position { get; set; }
+        public SerializedVector3 Position { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "rotation")]
-        public Vector3 Rotation { get; set; }
+        public SerializedVector3 Rotation { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "information")]
         public string Information { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "status")]
         public AR_Status Status { get; set; }
+
+        public AR_Model()
+        {
+            Id = Guid.NewGuid().ToString();
+            Scale = new SerializedVector3();
+            Position = new SerializedVector3();
+            Rotation = new SerializedVector3();
+            Status = AR_Status.ACTIVE;
+            Information = "";
+        }
     }
 
     public enum AR_Status : ushort

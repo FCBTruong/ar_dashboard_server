@@ -34,6 +34,10 @@ namespace ar_dashboard.Controllers
         {
             try
             {
+                if(file == null)
+                {
+                    return BadRequest("file is null");
+                }
                 var identity = HttpContext.User.Identity as ClaimsIdentity;
                 IList<Claim> claim = identity.Claims.ToList();
                 var userId = claim[0].Value;

@@ -16,7 +16,7 @@ namespace ar_dashboard.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ArtifactsController:ControllerBase
+    public class ArtifactsController : ControllerBase
     {
         private readonly IUserDbService _userDbService;
         private readonly IConfiguration _configuration;
@@ -41,7 +41,7 @@ namespace ar_dashboard.Controllers
                 var userId = claim[0].Value;
 
                 var userData = await _userDbService.GetAsync(userId);
-                if(userData == null)
+                if (userData == null)
                 {
                     return BadRequest("user data is null");
                 }
@@ -49,7 +49,7 @@ namespace ar_dashboard.Controllers
                 // Find museum with id
                 var museumId = artifactForm.MuseumId;
                 var museum = userData.Museums.Find(museum => museum.Id == museumId);
-                if(museum == null)
+                if (museum == null)
                 {
                     return BadRequest("Can not find museum");
                 }
@@ -94,7 +94,7 @@ namespace ar_dashboard.Controllers
 
                 // Find artifact by id
                 int check = museum.Artifacts.FindIndex(_artifact => _artifact.Id == artifact.Id);
-                if(check == -1)
+                if (check == -1)
                 {
                     return BadRequest("Artifact not found");
                 }
@@ -149,5 +149,40 @@ namespace ar_dashboard.Controllers
                 return StatusCode(500, $"Internel server error: {e}");
             }
         }
+        [Authorize]
+        [HttpDelete("{museumId")]
+        public async Task<IActionResult> DeleteAll(string museumId)
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var userId = claim[0].Value;
+
+                var userData = await _userDbService.GetAsync(userId);
+                if (userData == null)
+                {
+                    return BadRequest("user data is null");
+                }
+
+                var museum = userData.Museums.Find(museum => museum.Id == museumId);
+                if (museum == null)
+                {
+                    return BadRequest("Can not find museum");
+                }
+
+
+                museum.Artifacts.Clear();
+
+                await _userDbService.UpdateAsync(userId, userData);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
         }
+    }
 }
+
