@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ar_dashboard.Models;
+using ar_dashboard.Models.ClientReceiveForm;
 using ar_dashboard.Models.ClientSendForm;
 using ar_dashboard.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -58,7 +59,11 @@ namespace ar_dashboard.Controllers
 
                 await _userDbService.UpdateAsync(userId, userData);
 
-                return Ok(artifact);
+                var receiveForm = new ClientReceiveArtifact();
+                receiveForm.ArtifactId = artifact.Id;
+                receiveForm.UserData = userData;
+
+                return Ok(receiveForm);
             }
             catch (Exception e)
             {
@@ -102,7 +107,11 @@ namespace ar_dashboard.Controllers
 
                 await _userDbService.UpdateAsync(userId, userData);
 
-                return Ok(artifact);
+                var receiveForm = new ClientReceiveArtifact();
+                receiveForm.ArtifactId = artifact.Id;
+                receiveForm.UserData = userData;
+
+                return Ok(receiveForm);
             }
             catch (Exception e)
             {
@@ -149,8 +158,9 @@ namespace ar_dashboard.Controllers
                 return StatusCode(500, $"Internel server error: {e}");
             }
         }
+
         [Authorize]
-        [HttpDelete("{museumId")]
+        [HttpDelete("{museumId}")]
         public async Task<IActionResult> DeleteAll(string museumId)
         {
             try

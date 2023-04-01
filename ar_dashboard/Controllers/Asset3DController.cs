@@ -46,7 +46,7 @@ namespace ar_dashboard.Controllers
                     return BadRequest("user data is null");
                 }
 
-                var folderName = Path.Combine("Resources/Model3D", userId);
+                var folderName = Path.Combine("Resources/Files", userId);
                 if (!Directory.Exists(folderName))
                 {
                     Directory.CreateDirectory(folderName);
@@ -104,7 +104,7 @@ namespace ar_dashboard.Controllers
         {
             try
             {
-                var folderName = Path.Combine("Resources/Model3D", userId);
+                var folderName = Path.Combine("Resources/Files", userId);
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 var filepath = Path.Combine(pathToSave, fileName);
 

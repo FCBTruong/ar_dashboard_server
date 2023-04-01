@@ -106,8 +106,6 @@ namespace ar_dashboard
             {
                 endpoints.MapControllers();
             });
-        }
-
-       
+        }  
     }
 }

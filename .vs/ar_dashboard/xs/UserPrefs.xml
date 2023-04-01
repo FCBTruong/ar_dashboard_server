@@ -1,32 +1,34 @@
 ﻿<Properties StartupConfiguration="{E8105AC0-88FC-46FB-AAE1-AAA5DA1D9C82}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Models/Data/SerializedVector3.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Models/ClientSendForm/CreateArtifactForm.cs">
     <Files>
       <File FileName="ar_dashboard/Controllers/SignupController.cs" Line="79" Column="46" />
       <File FileName="ar_dashboard/Controllers/UsersController.cs" />
       <File FileName="ar_dashboard/Services/IUserDbService.cs" />
       <File FileName="ar_dashboard/Services/UserDbService.cs" />
       <File FileName="ar_dashboard/appsettings.Development.json" />
-      <File FileName="ar_dashboard/Program.cs" />
+      <File FileName="ar_dashboard/Program.cs" Line="16" Column="1" />
       <File FileName="ar_dashboard/Models/Authorization/AuthenModel.cs" />
       <File FileName="ar_dashboard/Controllers/LoginController.cs" />
       <File FileName="ar_dashboard/Models/Data/UserData.cs" />
       <File FileName="ar_dashboard/appsettings.json" />
-      <File FileName="ar_dashboard/Startup.cs" />
+      <File FileName="ar_dashboard/Startup.cs" Line="110" Column="6" />
       <File FileName="ar_dashboard/Controllers/AdminController.cs" />
       <File FileName="ar_dashboard/Models/ClientSendForm/SignupForm.cs" />
-      <File FileName="ar_dashboard/Controllers/MuseumsController.cs" Line="131" Column="37" />
-      <File FileName="ar_dashboard/Models/Data/Museum.cs" Line="12" Column="67" />
+      <File FileName="ar_dashboard/Controllers/MuseumsController.cs" />
+      <File FileName="ar_dashboard/Models/Data/Museum.cs" />
       <File FileName="ar_dashboard/Models/ClientSendForm/CreateMuseumForm.cs" />
       <File FileName="ar_dashboard/Models/ClientSendForm/LoginForm.cs" />
-      <File FileName="ar_dashboard/Models/ClientSendForm/CreateArtifactForm.cs" />
-      <File FileName="ar_dashboard/Models/Data/Artifact.cs" Line="22" Column="38" />
-      <File FileName="ar_dashboard/Controllers/DatabaseController.cs" Line="15" Column="1" />
-      <File FileName="ar_dashboard/Controllers/Asset3DController.cs" Line="32" Column="19" />
+      <File FileName="ar_dashboard/Models/ClientSendForm/CreateArtifactForm.cs" Line="1" Column="1" />
+      <File FileName="ar_dashboard/Models/Data/Artifact.cs" />
+      <File FileName="ar_dashboard/Controllers/DatabaseController.cs" />
+      <File FileName="ar_dashboard/Controllers/Asset3DController.cs" Line="101" Column="1" />
       <File FileName="ar_dashboard/Controllers/WeatherForecastController.cs" />
-      <File FileName="ar_dashboard/Controllers/ArtifactsController.cs" Line="1" Column="1" />
-      <File FileName="ar_dashboard/Models/Data/Asset3D.cs" Line="4" Column="18" />
-      <File FileName="ar_dashboard/Models/Data/AR_Model.cs" Line="33" Column="22" />
-      <File FileName="ar_dashboard/Models/Data/SerializedVector3.cs" Line="8" Column="1" />
+      <File FileName="ar_dashboard/Controllers/ArtifactsController.cs" Line="154" Column="32" />
+      <File FileName="ar_dashboard/Models/Data/Asset3D.cs" />
+      <File FileName="ar_dashboard/Models/Data/AR_Model.cs" />
+      <File FileName="ar_dashboard/Models/Data/SerializedVector3.cs" />
+      <File FileName="ar_dashboard/Controllers/FilesController.cs" Line="53" Column="49" />
+      <File FileName="ar_dashboard/Models/ClientReceiveForm/ClientReceiveArtifact.cs" Line="6" Column="17" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -36,16 +38,13 @@
               <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True">
                 <Node name="Authorization" expanded="True" />
-                <Node name="ClientSendForm" expanded="True" />
-                <Node name="Data" expanded="True">
-                  <Node name="SerializedVector3.cs" selected="True" />
+                <Node name="ClientReceiveForm" expanded="True" />
+                <Node name="ClientSendForm" expanded="True">
+                  <Node name="CreateArtifactForm.cs" selected="True" />
                 </Node>
+                <Node name="Data" expanded="True" />
               </Node>
-              <Node name="Resources" expanded="True">
-                <Node name="Model3D" expanded="True">
-                  <Node name="2facc1e4-b211-4621-863b-9f46b12fcb42" expanded="True" />
-                </Node>
-              </Node>
+              <Node name="Resources" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="appsettings.json" expanded="True" />
             </Node>
