@@ -24,7 +24,7 @@ namespace ar_dashboard.Models
         public AR_Model()
         {
             Id = Guid.NewGuid().ToString();
-            Scale = new SerializedVector3();
+            Scale = new SerializedVector3(1, 1, 1);
             Position = new SerializedVector3();
             Rotation = new SerializedVector3();
             Status = AR_Status.ACTIVE;

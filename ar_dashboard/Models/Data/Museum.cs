@@ -13,12 +13,14 @@ namespace ar_dashboard.Models
         public string Introduction { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "artifacts")]
         public List<Artifact> Artifacts { get; set; }
-
+        [Newtonsoft.Json.JsonProperty(PropertyName = "date_create")]
+        public long DateCreate { get; set; }
         public Museum()
         {
             Id = Guid.NewGuid().ToString();
             Name = "Default";
             Artifacts = new List<Artifact>();
+            DateCreate = new DateTime().Millisecond;
         }
     }
 }

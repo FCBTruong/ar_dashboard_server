@@ -89,5 +89,35 @@ namespace ar_dashboard.Controllers
                 return StatusCode(500, $"Internel server error: {e}");
             }
         }
+
+        // PUT api/users/editMode
+        [HttpPut("editMode")]
+        [Authorize]
+        public async Task<IActionResult> SeteditMode(string editMode)
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var userId = claim[0].Value;
+                if (editMode != "viewing" && editMode != "editing")
+                {
+                    return BadRequest("not valid mode");
+                }
+                // get from database
+                var user = await _userDbService.GetAsync(userId);
+                if (user == null)
+                {
+                    return BadRequest("user is null");
+                }
+                user.EditMode = editMode;
+                await _userDbService.UpdateAsync(userId, user);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
+        }
     }
 }

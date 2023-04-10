@@ -104,7 +104,7 @@ namespace ar_dashboard.Controllers
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Issuer"],
                 claims,
-                expires: DateTime.Now.AddMinutes(2880),
+                expires: DateTime.Now.AddMinutes(10080), // 7 days
                 signingCredentials: credentials
                 );
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
@@ -146,6 +146,21 @@ namespace ar_dashboard.Controllers
 
                 var newToken = GenerateJSONWebToken(user);
                 return Ok(new { token = newToken }); ;
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Error: " + e);
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("verify")]
+        public ActionResult<IEnumerable<string>> VerifyToken()
+        {
+            try
+            {              
+                return Ok();
             }
             catch (Exception e)
             {

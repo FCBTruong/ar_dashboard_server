@@ -16,5 +16,12 @@ namespace ar_dashboard.Models.Data
             Y = 0;
             Z = 0;
         }
+
+        public SerializedVector3(float _X, float _Y, float _Z)
+        {
+            X = _X;
+            Y = _Y;
+            Z = _Z;
+        }
     }
 }

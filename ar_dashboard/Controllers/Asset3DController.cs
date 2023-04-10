@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -60,9 +60,9 @@ namespace ar_dashboard.Controllers
                     var fileName = assetId + "";
                     string extension = Path.GetExtension(file.FileName);
 
-                    if(extension != ".glb")
+                    if(extension != ".glb" && extension != ".fbx")
                     {
-                        return BadRequest("model 3d not in valid format (only support glb), current is " + extension);
+                        return BadRequest("model 3d not in valid format (only support glb, fbx), current is " + extension);
                     }
                     fileName += extension;
                     var fullPath = Path.Combine(pathToSave, fileName);
@@ -78,6 +78,7 @@ namespace ar_dashboard.Controllers
                     // fix tam
                     asset.Url = "https://localhost:5001/api/asset3d/" + userId + "/" + fileName;
                     asset.Id = assetId;
+                    asset.Name = file.FileName;
 
                     // save data to db
                     userData.Assets.Add(asset);
@@ -116,6 +117,33 @@ namespace ar_dashboard.Controllers
 
                 var bytes = await System.IO.File.ReadAllBytesAsync(filepath);
                 return File(bytes, contentType, Path.GetFileName(filepath));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> RemoveAll()
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var userId = claim[0].Value;
+
+                // after load success to storage
+                var userData = await _userDbService.GetAsync(userId);
+                if (userData == null)
+                {
+                    return BadRequest("user data is null");
+                }
+
+                userData.Assets.Clear();
+                await _userDbService.UpdateAsync(userId, userData);
+                return Ok();
             }
             catch (Exception e)
             {

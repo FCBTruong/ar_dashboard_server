@@ -34,7 +34,10 @@ namespace ar_dashboard.Controllers
         {
             try
             {
-                var userData =  await _userDbService.GetAsync(id);
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var userId = claim[0].Value;
+                var userData =  await _userDbService.GetAsync(userId);
 
                 if (userData == null)
                 {
@@ -87,6 +90,42 @@ namespace ar_dashboard.Controllers
                 await _userDbService.UpdateAsync(userId, userData);
                 return Ok(museum);
 
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
+        }
+
+        // PUT api/museums/5
+        [HttpPut("{museumId}")]
+        [Authorize]
+        public async Task<IActionResult> Update(string museumId, [FromBody] CreateMuseumForm museumUpdate)
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var userId = claim[0].Value;
+
+                var userData = await _userDbService.GetAsync(userId);
+
+                if (userData == null)
+                {
+                    return BadRequest("user is null");
+                }
+
+                var museum = userData.Museums.Find((m) => m.Id == museumId);
+                if (museum == null)
+                {
+                    return BadRequest("museum is null");
+                }
+
+                museum.Name = museumUpdate.Name;
+                museum.Introduction = museumUpdate.Introduction;
+
+                await _userDbService.UpdateAsync(userId, userData);
+                return Ok(museum);
             }
             catch (Exception e)
             {

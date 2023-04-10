@@ -17,6 +17,8 @@ namespace ar_dashboard.Models
         public UserRole Role { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "assets")]
         public List<Asset3D> Assets { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "editMode")]
+        public string EditMode { get; set; }
 
         public UserData()
         {
@@ -25,6 +27,7 @@ namespace ar_dashboard.Models
             Museums = new List<Museum>();
             Role = UserRole.USER;
             Assets = new List<Asset3D>();
+            EditMode = "editing";
         }
     }
 
