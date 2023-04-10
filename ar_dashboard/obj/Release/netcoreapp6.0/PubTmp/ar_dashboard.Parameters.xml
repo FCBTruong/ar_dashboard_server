@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="ar-dashboard" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/netcoreapp6\.0/PubTmp/Out/$" />
+  </parameter>
+</parameters>

@@ -1,0 +1,8 @@
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Debug/netcoreapp5.0/ar_dashboard.csproj.AssemblyReference.cache
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Debug/netcoreapp5.0/ar_dashboard.GeneratedMSBuildEditorConfig.editorconfig
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Debug/netcoreapp5.0/ar_dashboard.AssemblyInfoInputs.cache
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Debug/netcoreapp5.0/ar_dashboard.AssemblyInfo.cs
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Debug/netcoreapp5.0/ar_dashboard.csproj.CoreCompileInputs.cache
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Debug/netcoreapp5.0/ar_dashboard.MvcApplicationPartsAssemblyInfo.cache
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Debug/netcoreapp5.0/ar_dashboard.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Debug/netcoreapp5.0/ar_dashboard.pdb

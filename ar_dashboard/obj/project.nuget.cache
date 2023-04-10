@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+7jKv/Quv/3Nvd0O31BHimlYOiau6xDPsl3AMHTb0Q8LGVfXYnicByDmqfwLY36qRMrMVn4ZlMA8N53dqd23Dw==",
+  "dgSpecHash": "Wh2yL1+Ka/GY7UhxZozp6PXt4AfsXkJqr4CEjVSbDVQJBGh35DCcDwWx8VkVX5lH7IrXrr4G65T9wkUezB47aA==",
   "success": true,
   "projectFilePath": "/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/ar_dashboard.csproj",
   "expectedPackageFiles": [
@@ -30,7 +30,6 @@
     "/Users/lap60576-local/.nuget/packages/system.security.cryptography.cng/4.5.0/system.security.cryptography.cng.4.5.0.nupkg.sha512",
     "/Users/lap60576-local/.nuget/packages/system.security.cryptography.protecteddata/6.0.0/system.security.cryptography.protecteddata.6.0.0.nupkg.sha512",
     "/Users/lap60576-local/.nuget/packages/system.security.permissions/6.0.0/system.security.permissions.6.0.0.nupkg.sha512",
-    "/Users/lap60576-local/.nuget/packages/system.security.principal.windows/5.0.0/system.security.principal.windows.5.0.0.nupkg.sha512",
     "/Users/lap60576-local/.nuget/packages/system.text.encodings.web/4.7.2/system.text.encodings.web.4.7.2.nupkg.sha512",
     "/Users/lap60576-local/.nuget/packages/system.text.json/4.6.0/system.text.json.4.6.0.nupkg.sha512",
     "/Users/lap60576-local/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
