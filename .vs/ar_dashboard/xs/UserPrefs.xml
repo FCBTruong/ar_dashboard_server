@@ -1,25 +1,23 @@
 ﻿<Properties StartupConfiguration="{E8105AC0-88FC-46FB-AAE1-AAA5DA1D9C82}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Models/ClientSendForm/LoginForm.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Controllers/FilesController.cs">
     <Files>
-      <File FileName="ar_dashboard/ar_dashboard.csproj" Line="4" Column="26" />
-      <File FileName="ar_dashboard/Program.cs" Line="16" Column="1" />
-      <File FileName="ar_dashboard/Startup.cs" Line="86" Column="66" />
-      <File FileName="ar_dashboard/appsettings.json" Line="23" Column="4" />
-      <File FileName="ar_dashboard/Controllers/LoginController.cs" Line="42" Column="83" />
-      <File FileName="ar_dashboard/Controllers/SignupController.cs" Line="54" Column="32" />
-      <File FileName="ar_dashboard/Models/Authorization/RegexChecker.cs" Line="9" Column="48" />
-      <File FileName="ar_dashboard/appsettings.Development.json" Line="21" Column="1" />
-      <File FileName="ar_dashboard/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
-      <File FileName="ar_dashboard/Controllers/FilesController.cs" Line="87" Column="10" />
-      <File FileName="ar_dashboard/Services/UserDbService.cs" Line="1" Column="1" />
-      <File FileName="ar_dashboard/Controllers/DatabaseController.cs" Line="15" Column="29" />
-      <File FileName="ar_dashboard/Controllers/Asset3DController.cs" Line="73" Column="1" />
-      <File FileName="ar_dashboard/Controllers/ArtifactsController.cs" Line="1" Column="1" />
-      <File FileName="ar_dashboard/Controllers/AdminController.cs" Line="26" Column="13" />
-      <File FileName="ar_dashboard/Controllers/UsersController.cs" Line="24" Column="13" />
-      <File FileName="ar_dashboard/Models/ClientReceiveForm/ClientReceiveArtifact.cs" Line="7" Column="47" />
-      <File FileName="ar_dashboard/Models/ClientReceiveForm/ClientReceiveSignup.cs" Line="5" Column="6" />
-      <File FileName="ar_dashboard/Models/ClientSendForm/LoginForm.cs" Line="6" Column="60" />
+      <File FileName="ar_dashboard/Controllers/SignupController.cs" Line="56" Column="22" />
+      <File FileName="ar_dashboard/Models/Authorization/RegexChecker.cs" Line="9" Column="59" />
+      <File FileName="ar_dashboard/appsettings.Development.json" />
+      <File FileName="ar_dashboard/Controllers/WeatherForecastController.cs" />
+      <File FileName="ar_dashboard/Controllers/FilesController.cs" Line="92" Column="48" />
+      <File FileName="ar_dashboard/Services/UserDbService.cs" />
+      <File FileName="ar_dashboard/Controllers/DatabaseController.cs" />
+      <File FileName="ar_dashboard/Controllers/Asset3DController.cs" Line="68" Column="31" />
+      <File FileName="ar_dashboard/Controllers/ArtifactsController.cs" />
+      <File FileName="ar_dashboard/Controllers/AdminController.cs" />
+      <File FileName="ar_dashboard/Controllers/UsersController.cs" />
+      <File FileName="ar_dashboard/Models/ClientReceiveForm/ClientReceiveArtifact.cs" />
+      <File FileName="ar_dashboard/Models/ClientReceiveForm/ClientReceiveSignup.cs" Line="15" Column="28" />
+      <File FileName="ar_dashboard/Models/ClientSendForm/LoginForm.cs" />
+      <File FileName="ar_dashboard/Controllers/LoginController.cs" Line="56" Column="58" />
+      <File FileName="ar_dashboard/Controllers/MuseumsController.cs" Line="16" Column="1" />
+      <File FileName="ar_dashboard/Models/ClientSendForm/CreateMuseumForm.cs" Line="6" Column="62" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -27,13 +25,13 @@
           <Node name="ar_dashboard" expanded="True">
             <Node name="ar_dashboard" expanded="True">
               <Node name="Dependencies" expanded="True" />
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="FilesController.cs" selected="True" />
+              </Node>
               <Node name="Models" expanded="True">
                 <Node name="Authorization" expanded="True" />
                 <Node name="ClientReceiveForm" expanded="True" />
-                <Node name="ClientSendForm" expanded="True">
-                  <Node name="LoginForm.cs" selected="True" />
-                </Node>
+                <Node name="ClientSendForm" expanded="True" />
               </Node>
               <Node name="Resources" expanded="True">
                 <Node name="Files" expanded="True" />

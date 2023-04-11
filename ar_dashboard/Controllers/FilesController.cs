@@ -34,7 +34,7 @@ namespace ar_dashboard.Controllers
 
         [Authorize]
         [HttpPost] // should return the link to this resource
-        public async Task<IActionResult> uploadFile(IFormFile file)
+        public async Task<ActionResult<FileLoadData>> uploadFile(IFormFile file)
         {
             try
             {
@@ -70,8 +70,9 @@ namespace ar_dashboard.Controllers
                         await file.CopyToAsync(ms);
                         ms.Position = 0;
                         var info = await container.UploadBlobAsync(filePath, ms);
-                        var url = "https://museumfiles.blob.core.windows.net/" + containerName + "/" + filePath;
-                        return Ok(url);
+                        var fileLoadData = new FileLoadData();
+                        fileLoadData.Url = "https://museumfiles.blob.core.windows.net/" + containerName + "/" + filePath;
+                        return Ok(fileLoadData);
                     }
                 }
                 else
@@ -85,5 +86,11 @@ namespace ar_dashboard.Controllers
                 return StatusCode(500, $"Internel server error: {e}");
             }
         }
+    }
+
+    public class FileLoadData
+    {
+        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
+        public String Url { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace ar_dashboard.Models
     {
         public static bool checkAuthString(string str)
         {
-            Match myMatch = Regex.Match(str, @"(?!^[a-zA-Z@.]*$)^([a-zA-Z0-9@.]{6,35})$");
+            Match myMatch = Regex.Match(str, @"([a-zA-Z0-9@.]{6,35})$");
             if (myMatch.Success) return true;
             return false;
         }

@@ -38,26 +38,27 @@ namespace Web_BTL_Backend.Controllers
             {
                 if (signupForm == null) return BadRequest("form is null");
                 string email = signupForm.Email;
-                if (!RegexChecker.checkAuthString(email)) return Ok(
-                    new ClientReceiveSignup(SignupController.ERROR_INPUT));
+              
+                if (!RegexChecker.checkAuthString(email)) return BadRequest(
+                    new ClientReceiveSignup(ERROR_INPUT, signupForm.Email));
                 if (!RegexChecker.checkAuthString(signupForm.Password)) return Ok(
-                    new ClientReceiveSignup(SignupController.ERROR_INPUT));
+                    new ClientReceiveSignup(ERROR_INPUT, signupForm.Password));
 
 
-                if (await checkUsernameExsit(signupForm.UserName)) return Ok(
+                if (await checkUsernameExist(signupForm.Email)) return Conflict(
                     SignupController.ERROR_SAME_ACCOUNT);
                 string passwordHash = HashPassword.getHashPassCode(signupForm.Password);
                 string pass = signupForm.Password;
                 signupForm.Password = passwordHash;
 
-                if (await createAccount(signupForm)) return Ok(new LoginController(_databaseController, _config).Login(
+                if (await createAccount(signupForm)) return await new LoginController(_databaseController, _config).Login(
                     new LoginForm
                     {
                         Email = email,
                         Password = pass,
-                    }));
+                    });
                 return Ok(new ClientReceiveSignup(
-                    SignupController.SUCCESS));
+                    SignupController.SUCCESS, ""));
             }
             catch (Exception e)
             {
@@ -65,25 +66,32 @@ namespace Web_BTL_Backend.Controllers
             }
         }
 
-        private async Task<bool> checkUsernameExsit(string username)
+        private async Task<bool> checkUsernameExist(string email)
         {
-            List<AuthenModel> authList = (await _authenDbService.GetMultipleAsync($"SELECT * FROM c WHERE c.username = '{username}'")).ToList();
+            List<AuthenModel> authList = (await _authenDbService.GetMultipleAsync($"SELECT * FROM c WHERE c.email = '{email}'")).ToList();
             foreach (AuthenModel auth in authList)
             {
-                if (auth.UserName == username) return true;
+                if (auth.Email == email) return true;
             }
             return false;
         }
 
         private async Task<bool> createAccount(SignupForm signupForm)
         {
+            var role = (ushort)UserRole.USER;
+            // fix tam
+            if (signupForm.Email.Equals("nguyenhuytruong9112k@gmail.com"))
+            {
+                role = (ushort)UserRole.ADMIN;
+            }
+
             AuthenModel user = new AuthenModel
             {
                 UserName = signupForm.UserName,
                 Password = signupForm.Password,
                 Id = Guid.NewGuid().ToString(),
                 Email = signupForm.Email,
-                Role = (ushort)UserRole.USER
+                Role = role
             };
 
             // save to db
