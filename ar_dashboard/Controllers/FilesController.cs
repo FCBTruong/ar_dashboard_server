@@ -46,33 +46,17 @@ namespace ar_dashboard.Controllers
                 IList<Claim> claim = identity.Claims.ToList();
                 var userId = claim[0].Value;
 
-                // after load success to storage
-                var userData = await _userDbService.GetAsync(userId);
-                if (userData == null)
-                {
-                    return BadRequest("user data is null");
-                }
-
-
+                
                 if (file.Length > 0)
                 {
-                    var assetId = Guid.NewGuid().ToString();
-                    var fileName = assetId + "";
-                    string extension = Path.GetExtension(file.FileName);
-                    fileName += extension;
-                    var filePath = Path.Combine(userId, fileName);
-                    var containerName = "users";
-
-                    BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-                    await container.CreateIfNotExistsAsync();
-                    using (var ms = new MemoryStream())
+                    var upload = await processLoadFile(userId, file);
+                    if(upload != null)
                     {
-                        await file.CopyToAsync(ms);
-                        ms.Position = 0;
-                        var info = await container.UploadBlobAsync(filePath, ms);
-                        var fileLoadData = new FileLoadData();
-                        fileLoadData.Url = "https://museumfiles.blob.core.windows.net/" + containerName + "/" + filePath;
-                        return Ok(fileLoadData);
+                        return Ok(upload);
+                    }
+                    else
+                    {
+                        return BadRequest("can not load, error");
                     }
                 }
                 else
@@ -83,8 +67,32 @@ namespace ar_dashboard.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return StatusCode(500, $"Internel server error: {e}");
             }
+        }
+
+        public async Task<FileLoadData> processLoadFile(string userId, IFormFile file)
+        {
+            var assetId = Guid.NewGuid().ToString();
+            var fileName = assetId + "";
+            string extension = Path.GetExtension(file.FileName);
+            fileName += extension;
+            var filePath = Path.Combine(userId, fileName);
+            var containerName = "users";
+
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+            using (var ms = new MemoryStream())
+            {
+                await file.CopyToAsync(ms);
+                ms.Position = 0;
+                var info = await container.UploadBlobAsync(filePath, ms);
+            }
+            var fileLoadData = new FileLoadData();
+            fileLoadData.Url = "https://museumfiles.blob.core.windows.net/" + containerName + "/" + filePath;
+
+            return fileLoadData;
         }
     }
 

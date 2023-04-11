@@ -64,8 +64,15 @@ namespace ar_dashboard.Controllers
                  
 
                     Asset3D asset = new Asset3D();
+                    var filesController = new FilesController(_databaseController, _configuration);
+                    
 
-                    FileLoadData upload = (await (new FilesController(_databaseController, _configuration).uploadFile(file))).Value;
+                    var upload = await filesController.processLoadFile(userId, file);
+
+                    if(upload == null)
+                    {
+                        return BadRequest("can not load file to storage");
+                    }
                  
                     asset.Url = upload.Url;
                     asset.Id = assetId;

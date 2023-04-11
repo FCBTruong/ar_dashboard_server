@@ -10,6 +10,9 @@
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/ar_dashboard.runtimeconfig.json
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/ar_dashboard.pdb
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/Azure.Core.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/Azure.Storage.Blobs.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/Azure.Storage.Common.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/Azure.Storage.Files.Shares.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/Microsoft.Azure.Cosmos.Client.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/Microsoft.Azure.Cosmos.Core.dll
@@ -27,6 +30,7 @@
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/System.Configuration.ConfigurationManager.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/System.Drawing.Common.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/System.IdentityModel.Tokens.Jwt.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/System.IO.Hashing.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/System.Memory.Data.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/System.Security.Cryptography.ProtectedData.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/System.Security.Permissions.dll
@@ -37,7 +41,6 @@
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/runtimes/win-x64/native/vcruntime140.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/runtimes/win-x64/native/vcruntime140_1.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
-/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/runtimes/unix/lib/net6.0/System.Drawing.Common.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/runtimes/win/lib/net6.0/System.Drawing.Common.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/PubTmp/Out/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
