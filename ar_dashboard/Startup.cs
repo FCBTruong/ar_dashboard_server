@@ -82,7 +82,8 @@ namespace ar_dashboard
             "http://127.0.0.1:3000",
             "http://127.0.0.1:3001",
             "http://localhost:3000",
-            "http://localhost:3001")
+            "http://localhost:3001",
+            "https://brave-ground-0e1fa2100.3.azurestaticapps.net")
             .AllowAnyMethod()
             .AllowCredentials()
             .AllowAnyHeader());

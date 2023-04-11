@@ -22,10 +22,13 @@ namespace ar_dashboard.Controllers
     public class Asset3DController : ControllerBase
     {
         private readonly IUserDbService _userDbService;
+        private readonly DatabaseController _databaseController;
+        private readonly IConfiguration _configuration;
         public Asset3DController(DatabaseController databaseController, IConfiguration configuration)
         {
             _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
-
+            _databaseController = databaseController;
+            _configuration = configuration;
         }
 
         [Authorize]
@@ -46,39 +49,27 @@ namespace ar_dashboard.Controllers
                     return BadRequest("user data is null");
                 }
 
-                var folderName = Path.Combine("Resources/Files", userId);
-                if (!Directory.Exists(folderName))
-                {
-                    Directory.CreateDirectory(folderName);
-                }
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                Console.WriteLine("path to save" + pathToSave);
+              
 
                 if (file.Length > 0)
                 {
-                    var assetId = Guid.NewGuid().ToString();
-                    var fileName = assetId + "";
+                    var assetId = new Guid().ToString();
                     string extension = Path.GetExtension(file.FileName);
+                    var assetName = Path.GetFileNameWithoutExtension(file.FileName);
 
-                    if(extension != ".glb" && extension != ".fbx")
+                    if(extension != ".glb")
                     {
-                        return BadRequest("model 3d not in valid format (only support glb, fbx), current is " + extension);
+                        return BadRequest("model 3d not in valid format (only support glb), current is " + extension);
                     }
-                    fileName += extension;
-                    var fullPath = Path.Combine(pathToSave, fileName);
-                    var dbPath = Path.Combine(folderName, fileName); // save to database
-
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
+                 
 
                     Asset3D asset = new Asset3D();
 
-                    // fix tam
-                    asset.Url = "https://localhost:5001/api/asset3d/" + userId + "/" + fileName;
+                    var upload = await (new FilesController(_databaseController, _configuration).uploadFile(file));
+                 
+                    asset.Url = upload.ToString();
                     asset.Id = assetId;
-                    asset.Name = file.FileName;
+                    asset.Name = assetName;
 
                     // save data to db
                     userData.Assets.Add(asset);

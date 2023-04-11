@@ -7,6 +7,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ar_dashboard.Models;
 using ar_dashboard.Services;
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Files.Shares;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +25,11 @@ namespace ar_dashboard.Controllers
     public class FilesController : ControllerBase
     {
         private readonly IUserDbService _userDbService;
+        private readonly String connectionString;
         public FilesController(DatabaseController databaseController, IConfiguration configuration)
         {
             _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
-
+            connectionString = configuration["AzureFiles:ConnectionString"];
         }
 
         [Authorize]
@@ -34,7 +38,7 @@ namespace ar_dashboard.Controllers
         {
             try
             {
-                if(file == null)
+                if (file == null)
                 {
                     return BadRequest("file is null");
                 }
@@ -49,14 +53,6 @@ namespace ar_dashboard.Controllers
                     return BadRequest("user data is null");
                 }
 
-                var folderUserName = Path.Combine("Resources/Files", userId);
-                var folderName = folderUserName;
-                if (!Directory.Exists(folderName))
-                {
-                    Directory.CreateDirectory(folderName);
-                }
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                Console.WriteLine("path to save" + pathToSave);
 
                 if (file.Length > 0)
                 {
@@ -64,47 +60,25 @@ namespace ar_dashboard.Controllers
                     var fileName = assetId + "";
                     string extension = Path.GetExtension(file.FileName);
                     fileName += extension;
-                    var fullPath = Path.Combine(pathToSave, fileName);
-                    
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    var filePath = Path.Combine(userId, fileName);
+                    var containerName = "users";
+
+                    BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+                    await container.CreateIfNotExistsAsync();
+                    using (var ms = new MemoryStream())
                     {
-                        file.CopyTo(stream);
+                        await file.CopyToAsync(ms);
+                        ms.Position = 0;
+                        var info = await container.UploadBlobAsync(filePath, ms);
+                        var url = "https://museumfiles.blob.core.windows.net/" + containerName + "/" + filePath;
+                        return Ok(url);
                     }
-
-                    var link = "https://localhost:5001/api/files/" + userId + "/" + fileName;
-
-                    return Ok(new { link });
                 }
                 else
                 {
-                    return BadRequest();
+                    return BadRequest("File is null");
                 }
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, $"Internel server error: {e}");
-            }
-        }
-
-
-        [HttpGet("{userId}/{fileName}")]
-        public async Task<IActionResult> downloadFile(string userId, string fileName)
-        {
-            try
-            {
-                var folderUserName = Path.Combine("Resources/Files", userId);
-                var folderName = folderUserName;
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                var filepath = Path.Combine(pathToSave, fileName);
-
-                var provider = new FileExtensionContentTypeProvider();
-                if (!provider.TryGetContentType(filepath, out var contentType))
-                {
-                    contentType = "application/octest-stream";
-                }
-
-                var bytes = await System.IO.File.ReadAllBytesAsync(filepath);
-                return File(bytes, contentType, Path.GetFileName(filepath));
+              
             }
             catch (Exception e)
             {

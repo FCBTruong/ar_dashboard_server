@@ -35,15 +35,15 @@ namespace ar_dashboard.Controllers
         {
             try
             {
-                string username = loginForm.UserName;
+                string email = loginForm.Email;
                 string password = loginForm.Password;
-                if (username == null || password == null) return BadRequest("Not Null " + username + password);
+                if (email == null || password == null) return BadRequest("Not Null ");
 
-                if (!RegexChecker.checkAuthString(username)) return BadRequest("Invalid username");
+                if (!RegexChecker.checkAuthString(email)) return BadRequest("Invalid username");
                 if (!RegexChecker.checkAuthString(password)) return BadRequest("Invalid password");
 
                 AuthenModel login = new AuthenModel();
-                login.UserName = username;
+                login.Email = email;
                 login.Password = password;
                 IActionResult response = Unauthorized();
 
@@ -68,7 +68,7 @@ namespace ar_dashboard.Controllers
             AuthenModel user = null;
 
             // find user in database and compare password input with password db
-            var accs = (await _authenDbService.GetMultipleAsync($"SELECT * FROM c WHERE  c.username = '{login.UserName}'")).ToArray();
+            var accs = (await _authenDbService.GetMultipleAsync($"SELECT * FROM c WHERE  c.email = '{login.Email}'")).ToArray();
             if (accs.Length == 0) return user;
             var acc = accs[0];
 

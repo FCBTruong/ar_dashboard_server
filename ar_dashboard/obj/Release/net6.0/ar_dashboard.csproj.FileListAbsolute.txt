@@ -38,7 +38,6 @@
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/runtimes/win-x64/native/vcruntime140.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/runtimes/win-x64/native/vcruntime140_1.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
-/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/runtimes/unix/lib/net6.0/System.Drawing.Common.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/runtimes/win/lib/net6.0/System.Drawing.Common.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
@@ -56,3 +55,7 @@
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/ar_dashboard.pdb
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/ar_dashboard.genruntimeconfig.cache
 /Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/obj/Release/net6.0/ar_dashboard.csproj.AssemblyReference.cache
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/Azure.Storage.Blobs.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/Azure.Storage.Common.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/Azure.Storage.Files.Shares.dll
+/Users/lap60576-local/Projects/ar_dashboard/ar_dashboard/bin/Release/net6.0/System.IO.Hashing.dll

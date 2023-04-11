@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ar_dashboard.Models.ClientReceiveForm;
 
 namespace Web_BTL_Backend.Controllers
 {
@@ -16,6 +17,10 @@ namespace Web_BTL_Backend.Controllers
     [ApiController]
     public class SignupController : ControllerBase
     {
+        public const int SUCCESS = 0;
+        public const int ERROR_INPUT = 1;
+        public const int ERROR_SAME_ACCOUNT = 2;
+
         private IConfiguration _config;
         private readonly IAuthenDbService _authenDbService;
         private readonly DatabaseController _databaseController;
@@ -31,26 +36,28 @@ namespace Web_BTL_Backend.Controllers
         {
             try
             {
-                string username = signupForm.UserName;
-                if (!RegexChecker.checkAuthString(username)) return BadRequest("Valid username");
-                if (!RegexChecker.checkAuthString(signupForm.Password)) return BadRequest("Valid password");
+                if (signupForm == null) return BadRequest("form is null");
+                string email = signupForm.Email;
+                if (!RegexChecker.checkAuthString(email)) return Ok(
+                    new ClientReceiveSignup(SignupController.ERROR_INPUT));
+                if (!RegexChecker.checkAuthString(signupForm.Password)) return Ok(
+                    new ClientReceiveSignup(SignupController.ERROR_INPUT));
 
 
-                IActionResult response = BadRequest("Same username");
-                if (signupForm == null) return response;
-
-                if (await checkUsernameExsit(signupForm.UserName)) return response;
+                if (await checkUsernameExsit(signupForm.UserName)) return Ok(
+                    SignupController.ERROR_SAME_ACCOUNT);
                 string passwordHash = HashPassword.getHashPassCode(signupForm.Password);
                 string pass = signupForm.Password;
                 signupForm.Password = passwordHash;
 
                 if (await createAccount(signupForm)) return Ok(new LoginController(_databaseController, _config).Login(
-                    new LoginForm {
-                    UserName = username,
-                    Password = pass
-          
-                }));
-                return response;
+                    new LoginForm
+                    {
+                        Email = email,
+                        Password = pass,
+                    }));
+                return Ok(new ClientReceiveSignup(
+                    SignupController.SUCCESS));
             }
             catch (Exception e)
             {
@@ -76,7 +83,7 @@ namespace Web_BTL_Backend.Controllers
                 Password = signupForm.Password,
                 Id = Guid.NewGuid().ToString(),
                 Email = signupForm.Email,
-                Role = (ushort) UserRole.USER
+                Role = (ushort)UserRole.USER
             };
 
             // save to db

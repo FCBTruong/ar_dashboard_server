@@ -21,6 +21,10 @@
     <None Remove="Models\ClientSendForm\" />
     <None Remove="Models\ClientReceiveForm\" />
     <None Remove="Resources\Files\" />
+    <None Remove="Azure.Core" />
+    <None Remove="Azure.Storage.Blobs" />
+    <None Remove="Azure.Storage.Files.Shares" />
+    <None Remove="System.Configuration.ConfigurationManager" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -36,5 +40,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.32.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.16" />
+    <PackageReference Include="Azure.Core" Version="1.30.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.15.1" />
+    <PackageReference Include="Azure.Storage.Files.Shares" Version="12.13.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
 </Project>
