@@ -53,7 +53,7 @@ namespace ar_dashboard.Controllers
 
                 if (file.Length > 0)
                 {
-                    var assetId = new Guid().ToString();
+                    var assetId = Guid.NewGuid().ToString();
                     string extension = Path.GetExtension(file.FileName);
                     var assetName = Path.GetFileNameWithoutExtension(file.FileName);
 

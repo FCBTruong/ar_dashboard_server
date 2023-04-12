@@ -1,23 +1,24 @@
 ﻿<Properties StartupConfiguration="{E8105AC0-88FC-46FB-AAE1-AAA5DA1D9C82}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Controllers/FilesController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Controllers/Asset3DController.cs">
     <Files>
       <File FileName="ar_dashboard/Controllers/SignupController.cs" Line="56" Column="22" />
       <File FileName="ar_dashboard/Models/Authorization/RegexChecker.cs" Line="9" Column="59" />
       <File FileName="ar_dashboard/appsettings.Development.json" />
       <File FileName="ar_dashboard/Controllers/WeatherForecastController.cs" />
-      <File FileName="ar_dashboard/Controllers/FilesController.cs" Line="92" Column="48" />
+      <File FileName="ar_dashboard/Controllers/FilesController.cs" Line="59" Column="66" />
       <File FileName="ar_dashboard/Services/UserDbService.cs" />
-      <File FileName="ar_dashboard/Controllers/DatabaseController.cs" />
-      <File FileName="ar_dashboard/Controllers/Asset3DController.cs" Line="68" Column="31" />
-      <File FileName="ar_dashboard/Controllers/ArtifactsController.cs" />
+      <File FileName="ar_dashboard/Controllers/DatabaseController.cs" Line="15" Column="29" />
+      <File FileName="ar_dashboard/Controllers/Asset3DController.cs" Line="56" Column="56" />
+      <File FileName="ar_dashboard/Controllers/ArtifactsController.cs" Line="1" Column="1" />
       <File FileName="ar_dashboard/Controllers/AdminController.cs" />
       <File FileName="ar_dashboard/Controllers/UsersController.cs" />
       <File FileName="ar_dashboard/Models/ClientReceiveForm/ClientReceiveArtifact.cs" />
       <File FileName="ar_dashboard/Models/ClientReceiveForm/ClientReceiveSignup.cs" Line="15" Column="28" />
       <File FileName="ar_dashboard/Models/ClientSendForm/LoginForm.cs" />
-      <File FileName="ar_dashboard/Controllers/LoginController.cs" Line="56" Column="58" />
+      <File FileName="ar_dashboard/Controllers/LoginController.cs" Line="50" Column="1" />
       <File FileName="ar_dashboard/Controllers/MuseumsController.cs" Line="16" Column="1" />
       <File FileName="ar_dashboard/Models/ClientSendForm/CreateMuseumForm.cs" Line="6" Column="62" />
+      <File FileName="ar_dashboard/Models/Data/AR_Model.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -26,12 +27,13 @@
             <Node name="ar_dashboard" expanded="True">
               <Node name="Dependencies" expanded="True" />
               <Node name="Controllers" expanded="True">
-                <Node name="FilesController.cs" selected="True" />
+                <Node name="Asset3DController.cs" selected="True" />
               </Node>
               <Node name="Models" expanded="True">
                 <Node name="Authorization" expanded="True" />
                 <Node name="ClientReceiveForm" expanded="True" />
                 <Node name="ClientSendForm" expanded="True" />
+                <Node name="Data" expanded="True" />
               </Node>
               <Node name="Resources" expanded="True">
                 <Node name="Files" expanded="True" />

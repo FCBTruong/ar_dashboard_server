@@ -78,7 +78,7 @@ namespace ar_dashboard.Controllers
             var fileName = assetId + "";
             string extension = Path.GetExtension(file.FileName);
             fileName += extension;
-            var filePath = Path.Combine(userId, fileName);
+            var filePath = userId + '/' + fileName;
             var containerName = "users";
 
             BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
