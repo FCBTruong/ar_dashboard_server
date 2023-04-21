@@ -62,12 +62,5 @@ namespace ar_dashboard.Controllers
                 return StatusCode(500, $"Internel server error: {e}");
             }
         }
-
-        [HttpGet]
-        [Route("/museums")]
-        public async Task<IActionResult> GetPublicMuseums()
-        {
-            return Ok();
-        }
     }
 }

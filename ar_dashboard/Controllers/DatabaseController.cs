@@ -51,7 +51,7 @@ namespace ar_dashboard.Controllers
         private static async Task<IAdminDbService> InitializeAdminDbInstanceAsync(IConfigurationSection configurationSection)
         {
             var databaseName = configurationSection["DatabaseName"];
-            var containerName = configurationSection["AuthenContainerName"];
+            var containerName = configurationSection["AdminContainerName"];
             var account = configurationSection["Account"];
             var key = configurationSection["Key"];
 
