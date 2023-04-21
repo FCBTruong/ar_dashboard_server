@@ -49,8 +49,11 @@ namespace ar_dashboard.Controllers
                 var identity = HttpContext.User.Identity as ClaimsIdentity;
                 IList<Claim> claim = identity.Claims.ToList();
                 var id = claim[0].Value;
+                var userName = claim[1].Value;
+                var role = claim[2].Value;
+                var email = claim[3].Value;
 
-                var user = await GetUserData(id);
+                var user = await GetUserData(id, userName, email);
                 return Ok(user);
             }
             catch (Exception e)
@@ -59,7 +62,7 @@ namespace ar_dashboard.Controllers
             }
         }
 
-        private async Task<UserData> GetUserData(string id)
+        private async Task<UserData> GetUserData(string id, string userName, string email)
         {
             // get from database
             var user = await _userDbService.GetAsync(id);
@@ -68,6 +71,8 @@ namespace ar_dashboard.Controllers
                 // user not created in db yet -> create new
                 user = new UserData();
                 user.Id = id;
+                user.Name = userName;
+                user.Email = email;
                 await _userDbService.AddAsync(user);
             }
             return user;

@@ -25,6 +25,8 @@
     <None Remove="Azure.Storage.Blobs" />
     <None Remove="Azure.Storage.Files.Shares" />
     <None Remove="System.Configuration.ConfigurationManager" />
+    <None Remove="Models\Guest\" />
+    <None Remove="Models\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -35,6 +37,8 @@
     <Folder Include="Models\ClientSendForm\" />
     <Folder Include="Models\ClientReceiveForm\" />
     <Folder Include="Resources\Files\" />
+    <Folder Include="Models\Guest\" />
+    <Folder Include="Models\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

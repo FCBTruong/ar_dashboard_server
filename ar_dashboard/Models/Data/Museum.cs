@@ -15,6 +15,8 @@ namespace ar_dashboard.Models
         public List<Artifact> Artifacts { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "date_create")]
         public long DateCreate { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "address")]
+        public string Address { get; set; }
         public Museum()
         {
             Id = Guid.NewGuid().ToString();

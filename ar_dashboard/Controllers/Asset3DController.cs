@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -49,7 +49,7 @@ namespace ar_dashboard.Controllers
                     return BadRequest("user data is null");
                 }
 
-              
+
 
                 if (file.Length > 0)
                 {
@@ -57,23 +57,23 @@ namespace ar_dashboard.Controllers
                     string extension = Path.GetExtension(file.FileName);
                     var assetName = Path.GetFileNameWithoutExtension(file.FileName);
 
-                    if(extension != ".glb")
+                    if (extension != ".glb")
                     {
                         return BadRequest("model 3d not in valid format (only support glb), current is " + extension);
                     }
-                 
+
 
                     Asset3D asset = new Asset3D();
                     var filesController = new FilesController(_databaseController, _configuration);
-                    
+
 
                     var upload = await filesController.processLoadFile(userId, file);
 
-                    if(upload == null)
+                    if (upload == null)
                     {
                         return BadRequest("can not load file to storage");
                     }
-                 
+
                     asset.Url = upload.Url;
                     asset.Id = assetId;
                     asset.Name = assetName;
@@ -140,6 +140,36 @@ namespace ar_dashboard.Controllers
                 }
 
                 userData.Assets.Clear();
+                await _userDbService.UpdateAsync(userId, userData);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
+        }
+
+        [HttpDelete("{assetId}")]
+        [Authorize]
+        public async Task<IActionResult> RemoveModel(string assetId)
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var userId = claim[0].Value;
+
+                // after load success to storage
+                var userData = await _userDbService.GetAsync(userId);
+                if (userData == null)
+                {
+                    return BadRequest("user data is null");
+                }
+
+                var idx = userData.Assets.FindIndex(a =>a.Id == assetId
+                );
+                if (idx == -1) return BadRequest("not found");
+                userData.Assets.RemoveAt(idx);
                 await _userDbService.UpdateAsync(userId, userData);
                 return Ok();
             }
