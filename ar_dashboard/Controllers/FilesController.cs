@@ -26,10 +26,12 @@ namespace ar_dashboard.Controllers
     {
         private readonly IUserDbService _userDbService;
         private readonly String connectionString;
+        private readonly IConfiguration _configuration;
         public FilesController(DatabaseController databaseController, IConfiguration configuration)
         {
             _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
             connectionString = configuration["AzureFiles:ConnectionString"];
+            _configuration = configuration;
         }
 
         [Authorize]
@@ -90,7 +92,7 @@ namespace ar_dashboard.Controllers
                 var info = await container.UploadBlobAsync(filePath, ms);
             }
             var fileLoadData = new FileLoadData();
-            fileLoadData.Url = "https://museumfiles.blob.core.windows.net/" + containerName + "/" + filePath;
+            fileLoadData.Url = _configuration["AzureFiles:RootUrl"] + containerName + "/" + filePath;
 
             return fileLoadData;
         }

@@ -1,16 +1,16 @@
 ﻿<Properties StartupConfiguration="{E8105AC0-88FC-46FB-AAE1-AAA5DA1D9C82}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Models/Data/Museum.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="ar_dashboard/Controllers/LoginController.cs" Line="89" Column="24" />
       <File FileName="ar_dashboard/Controllers/UsersController.cs" Line="1" Column="1" />
       <File FileName="ar_dashboard/Controllers/Asset3DController.cs" Line="171" Column="63" />
       <File FileName="ar_dashboard/Controllers/GuestController.cs" Line="64" Column="10" />
-      <File FileName="ar_dashboard/Models/Data/Museum.cs" Line="20" Column="62" />
+      <File FileName="ar_dashboard/Models/Data/Museum.cs" Line="26" Column="44" />
       <File FileName="ar_dashboard/Models/Data/Asset3D.cs" Line="1" Column="1" />
       <File FileName="ar_dashboard/Models/Data/Artifact.cs" Line="1" Column="1" />
       <File FileName="ar_dashboard/Models/Data/AR_Model.cs" Line="1" Column="1" />
       <File FileName="ar_dashboard/Models/Guest/ArtifactInformation.cs" />
-      <File FileName="ar_dashboard/Controllers/DatabaseController.cs" Line="54" Column="60" />
+      <File FileName="ar_dashboard/Controllers/DatabaseController.cs" Line="53" Column="52" />
       <File FileName="ar_dashboard/Services/IAuthenDbService.cs" Line="12" Column="25" />
       <File FileName="ar_dashboard/Services/IUserDbService.cs" Line="1" Column="1" />
       <File FileName="ar_dashboard/Services/UserDbService.cs" Line="1" Column="1" />
@@ -21,10 +21,16 @@
       <File FileName="ar_dashboard/Models/Data/UserData.cs" Line="1" Column="1" />
       <File FileName="ar_dashboard/Controllers/AdminController.cs" Line="76" Column="10" />
       <File FileName="ar_dashboard/Controllers/PublicController.cs" Line="23" Column="31" />
-      <File FileName="ar_dashboard/Controllers/MuseumsController.cs" Line="27" Column="126" />
+      <File FileName="ar_dashboard/Controllers/MuseumsController.cs" Line="79" Column="50" />
       <File FileName="ar_dashboard/Controllers/SignupController.cs" Line="11" Column="30" />
-      <File FileName="ar_dashboard/Controllers/FilesController.cs" Line="1" Column="1" />
+      <File FileName="ar_dashboard/Controllers/FilesController.cs" Line="83" Column="49" />
       <File FileName="ar_dashboard/Models/Data/SerializedVector3.cs" Line="1" Column="1" />
+      <File FileName="ar_dashboard/appsettings.Development.json" Line="13" Column="42" />
+      <File FileName="ar_dashboard/appsettings.json" Line="23" Column="68" />
+      <File FileName="ar_dashboard/Models/Authorization/AuthenModel.cs" Line="1" Column="1" />
+      <File FileName="ar_dashboard/Models/ClientSendForm/CreateMuseumForm.cs" Line="16" Column="30" />
+      <File FileName="ar_dashboard/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
+      <File FileName="ar_dashboard/Startup.cs" Line="79" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -36,15 +42,16 @@
               <Node name="Models" expanded="True">
                 <Node name="Admin" expanded="True" />
                 <Node name="Authorization" expanded="True" />
-                <Node name="Data" expanded="True">
-                  <Node name="Museum.cs" selected="True" />
-                </Node>
+                <Node name="ClientSendForm" expanded="True" />
+                <Node name="Data" expanded="True" />
               </Node>
               <Node name="Resources" expanded="True">
                 <Node name="Files" expanded="True" />
               </Node>
               <Node name="Services" expanded="True" />
-              <Node name="appsettings.json" expanded="True" />
+              <Node name="appsettings.json" expanded="True">
+                <Node name="appsettings.Development.json" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
@@ -53,7 +60,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.ar__dashboard PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

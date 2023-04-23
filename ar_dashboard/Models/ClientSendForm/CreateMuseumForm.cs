@@ -8,5 +8,11 @@ namespace ar_dashboard.Models.ClientSendForm
 
         [Newtonsoft.Json.JsonProperty(PropertyName = "introduction")]
         public string Introduction { get; set; }
+
+        [Newtonsoft.Json.JsonProperty(PropertyName = "imageUrl")]
+        public string ImageUrl { get; set; }
+
+        [Newtonsoft.Json.JsonProperty(PropertyName = "address")]
+        public string Address { get; set; }
     }
 }
