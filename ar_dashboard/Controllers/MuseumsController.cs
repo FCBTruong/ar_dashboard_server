@@ -102,7 +102,7 @@ namespace ar_dashboard.Controllers
         // PUT api/museums/5
         [HttpPut("{museumId}")]
         [Authorize]
-        public async Task<IActionResult> Update(string museumId, [FromBody] CreateMuseumForm museumUpdate)
+        public async Task<IActionResult> Update(string museumId, [FromBody] Museum museumUpdate)
         {
             try
             {
@@ -125,6 +125,9 @@ namespace ar_dashboard.Controllers
 
                 museum.Name = museumUpdate.Name;
                 museum.Introduction = museumUpdate.Introduction;
+                museum.ImageUrl = museumUpdate.ImageUrl;
+                museum.Address = museumUpdate.Address;
+                museum.OpeningTime = museumUpdate.OpeningTime;
 
                 await _userDbService.UpdateAsync(userId, userData);
                 return Ok(museum);

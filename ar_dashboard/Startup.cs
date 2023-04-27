@@ -67,6 +67,7 @@ namespace ar_dashboard
                 });
 
             services.AddSingleton<DatabaseController>(new DatabaseController(Configuration.GetSection("CosmosDb")));
+            services.AddSingleton<CacheController>(new CacheController());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
