@@ -33,12 +33,18 @@ namespace ar_dashboard.Services
         public async Task<AdminModel> GetAsync()
         {
             try
-            {
+            { 
                 var response = await _container.ReadItemAsync<AdminModel>("admin", new PartitionKey("admin"));
                 return response.Resource;
             }
-            catch (CosmosException) //For handling item not found and other exceptions
+            catch (CosmosException e) //For handling item not found and other exceptions
             {
+                if(e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    var adminModel = new AdminModel();
+                    await AddAsync(adminModel);
+                    return adminModel;
+                }
                 return null;
             }
         }

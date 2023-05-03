@@ -6,6 +6,8 @@ namespace ar_dashboard.Models.Admin
     public class AdminModel
     {
 
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "publicized_museums")]
         public List<PublicMuseumPost> PublicizedMuseums { get; set; }
         [Newtonsoft.Json.JsonProperty(PropertyName = "pending_museums")]
@@ -14,6 +16,7 @@ namespace ar_dashboard.Models.Admin
         {
             PublicizedMuseums = new List<PublicMuseumPost>();
             PendingMuseums = new List<PublicMuseumPost>();
+            Id = "admin";
         }
     }
 

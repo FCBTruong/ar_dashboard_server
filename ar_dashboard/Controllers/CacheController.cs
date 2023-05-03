@@ -4,6 +4,7 @@ using ar_dashboard.Services;
 using Microsoft.Extensions.Configuration;
 using ar_dashboard.Models.Guest;
 using Microsoft.Extensions.Caching.Memory;
+using ar_dashboard.Models.Admin;
 
 namespace ar_dashboard.Controllers
 {
@@ -14,19 +15,19 @@ namespace ar_dashboard.Controllers
 
         public CacheController()
         {
-           
+
         }
 
-        public MuseumsInformation GetMuseumsInformation()
+        public AdminModel GetAdminModel()
         {
-            return (MuseumsInformation)_cache.Get("museumsInformation");
+            return (AdminModel)_cache.Get("adminModel");
         }
 
-        public void SetMuseumsInformation(MuseumsInformation museumsInformation)
+        public void SetAdminData(AdminModel adminModel)
         {
-            _cache.Set("museumsInformation", museumsInformation, new MemoryCacheEntryOptions()
-          .SetAbsoluteExpiration(TimeSpan.FromMinutes(10))
-          .SetPriority(CacheItemPriority.High));
+            _cache.Set("adminModel", adminModel, new MemoryCacheEntryOptions()
+         .SetAbsoluteExpiration(TimeSpan.FromMinutes(1000))
+         .SetPriority(CacheItemPriority.High));
         }
     }
 }

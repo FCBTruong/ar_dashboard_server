@@ -53,7 +53,7 @@ namespace ar_dashboard.Controllers
                 var role = claim[2].Value;
                 var email = claim[3].Value;
 
-                var user = await GetUserData(id, userName, email);
+                var user = await GetUserData(id, userName, email, role);
                 return Ok(user);
             }
             catch (Exception e)
@@ -62,7 +62,7 @@ namespace ar_dashboard.Controllers
             }
         }
 
-        private async Task<UserData> GetUserData(string id, string userName, string email)
+        private async Task<UserData> GetUserData(string id, string userName, string email, string role)
         {
             // get from database
             var user = await _userDbService.GetAsync(id);
@@ -73,6 +73,7 @@ namespace ar_dashboard.Controllers
                 user.Id = id;
                 user.Name = userName;
                 user.Email = email;
+                user.Role = (UserRole)Convert.ToInt32(role);
                 await _userDbService.AddAsync(user);
             }
             return user;

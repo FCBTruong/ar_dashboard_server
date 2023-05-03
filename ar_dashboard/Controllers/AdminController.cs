@@ -17,12 +17,17 @@ namespace ar_dashboard.Controllers
     {
         private readonly IUserDbService _userDbService;
         private readonly IAuthenDbService _authenDbService;
-        private readonly IConfiguration _configuration;
+        private readonly IAdminDbService _adminDbService;
 
-        public AdminController(DatabaseController databaseController, IConfiguration configuration)
+        private readonly IConfiguration _configuration;
+        private readonly CacheController _cacheController;
+
+        public AdminController(DatabaseController databaseController, IConfiguration configuration, CacheController cacheController)
         {
             _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
             _authenDbService = databaseController.AuthenDbService ?? throw new ArgumentNullException(nameof(databaseController));
+            _adminDbService = databaseController.AdminDbService ?? throw new ArgumentNullException(nameof(databaseController));
+            _cacheController = cacheController;
             _configuration = configuration;
         }
 
@@ -68,6 +73,43 @@ namespace ar_dashboard.Controllers
                 await _authenDbService.DeleteAsync(id);
                 await _userDbService.DeleteAsync(id);
                 return NoContent();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("get-data")]
+        public async Task<IActionResult> GetAdminData()
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var role = ushort.Parse(claim[2].Value);
+                if (role != (ushort)UserRole.ADMIN)
+                {
+                    return Unauthorized("Only admins");
+                }
+
+                var adminModel = _cacheController.GetAdminModel();
+                if (adminModel == null)
+                {
+                    // get data
+                    adminModel = await _adminDbService.GetAsync();
+                    _cacheController.SetAdminData(adminModel);
+                }
+
+                if (adminModel == null)
+                {
+                    return StatusCode(500, "admin model is null");
+                }
+
+                return Ok(adminModel);
+
             }
             catch (Exception e)
             {

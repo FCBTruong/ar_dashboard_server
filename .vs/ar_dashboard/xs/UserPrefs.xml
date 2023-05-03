@@ -1,50 +1,24 @@
 ﻿<Properties StartupConfiguration="{E8105AC0-88FC-46FB-AAE1-AAA5DA1D9C82}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Controllers/PublicController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ar_dashboard/Controllers/AdminController.cs">
     <Files>
-      <File FileName="ar_dashboard/Controllers/LoginController.cs" Line="89" Column="24" />
-      <File FileName="ar_dashboard/Controllers/UsersController.cs" />
-      <File FileName="ar_dashboard/Controllers/Asset3DController.cs" />
-      <File FileName="ar_dashboard/Controllers/GuestController.cs" />
-      <File FileName="ar_dashboard/Models/Data/Museum.cs" />
-      <File FileName="ar_dashboard/Models/Data/Asset3D.cs" />
-      <File FileName="ar_dashboard/Models/Data/Artifact.cs" />
-      <File FileName="ar_dashboard/Models/Data/AR_Model.cs" />
-      <File FileName="ar_dashboard/Models/Guest/ArtifactInformation.cs" />
-      <File FileName="ar_dashboard/Controllers/DatabaseController.cs" Line="16" Column="1" />
-      <File FileName="ar_dashboard/Services/IAuthenDbService.cs" />
-      <File FileName="ar_dashboard/Services/IUserDbService.cs" />
-      <File FileName="ar_dashboard/Services/UserDbService.cs" />
-      <File FileName="ar_dashboard/Services/AuthenDbService.cs" />
-      <File FileName="ar_dashboard/Models/Admin/AdminModel.cs" />
-      <File FileName="ar_dashboard/Models/Data/UserData.cs" />
-      <File FileName="ar_dashboard/Controllers/AdminController.cs" />
-      <File FileName="ar_dashboard/Controllers/PublicController.cs" Line="66" Column="1" />
-      <File FileName="ar_dashboard/Controllers/MuseumsController.cs" Line="108" Column="9" />
-      <File FileName="ar_dashboard/Controllers/SignupController.cs" />
-      <File FileName="ar_dashboard/Controllers/FilesController.cs" />
-      <File FileName="ar_dashboard/Models/Data/SerializedVector3.cs" />
-      <File FileName="ar_dashboard/appsettings.Development.json" />
-      <File FileName="ar_dashboard/appsettings.json" />
-      <File FileName="ar_dashboard/Models/Authorization/AuthenModel.cs" />
-      <File FileName="ar_dashboard/Models/ClientSendForm/CreateMuseumForm.cs" />
-      <File FileName="ar_dashboard/Controllers/WeatherForecastController.cs" />
-      <File FileName="ar_dashboard/Startup.cs" Line="70" Column="73" />
-      <File FileName="ar_dashboard/Models/Guest/MuseumsInformation.cs" Line="32" Column="62" />
-      <File FileName="ar_dashboard/Controllers/CacheController.cs" Line="29" Column="49" />
+      <File FileName="ar_dashboard/Controllers/PublicController.cs" Line="69" Column="32" />
+      <File FileName="ar_dashboard/Services/AdminDbService.cs" Line="50" Column="1" />
+      <File FileName="ar_dashboard/Services/AuthenDbService.cs" Line="25" Column="68" />
+      <File FileName="ar_dashboard/Models/Admin/AdminModel.cs" Line="9" Column="57" />
+      <File FileName="ar_dashboard/Controllers/AdminController.cs" Line="77" Column="5" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ar_dashboard" expanded="True">
-            <Node name="ar_dashboard" expanded="True" selected="True">
+            <Node name="ar_dashboard" expanded="True">
               <Node name="Dependencies" expanded="True" />
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="AdminController.cs" selected="True" />
+              </Node>
               <Node name="Models" expanded="True">
                 <Node name="Admin" expanded="True" />
-                <Node name="Authorization" expanded="True" />
-                <Node name="ClientSendForm" expanded="True" />
                 <Node name="Data" expanded="True" />
-                <Node name="Guest" expanded="True" />
               </Node>
               <Node name="Resources" expanded="True">
                 <Node name="Files" expanded="True" />
