@@ -21,11 +21,13 @@ namespace ar_dashboard.Controllers
     {
         private readonly IUserDbService _userDbService;
         private readonly IConfiguration _configuration;
+        private readonly CacheController _cacheController;
 
-        public ArtifactsController(DatabaseController databaseController, IConfiguration configuration)
+        public ArtifactsController(DatabaseController databaseController, IConfiguration configuration, CacheController cacheController)
         {
             _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
             _configuration = configuration;
+            _cacheController = cacheController;
         }
 
         [Authorize]
@@ -41,7 +43,13 @@ namespace ar_dashboard.Controllers
                 IList<Claim> claim = identity.Claims.ToList();
                 var userId = claim[0].Value;
 
-                var userData = await _userDbService.GetAsync(userId);
+                // get from cache first
+                var userData = _cacheController.GetUserData(userId);
+
+                if (userData == null) // if data is not saved in cache, get from db
+                {
+                    userData = await _userDbService.GetAsync(userId);
+                }
                 if (userData == null)
                 {
                     return BadRequest("user data is null");
@@ -58,6 +66,7 @@ namespace ar_dashboard.Controllers
                 museum.Artifacts.Add(artifact);
 
                 await _userDbService.UpdateAsync(userId, userData);
+                _cacheController.SetUserData(userId, userData); // save to cache
 
                 var receiveForm = new ClientReceiveArtifact();
                 receiveForm.ArtifactId = artifact.Id;
@@ -83,7 +92,14 @@ namespace ar_dashboard.Controllers
                 IList<Claim> claim = identity.Claims.ToList();
                 var userId = claim[0].Value;
 
-                var userData = await _userDbService.GetAsync(userId);
+                // get from cache first
+                var userData = _cacheController.GetUserData(userId);
+
+                if (userData == null) // if data is not saved in cache, get from db
+                {
+                    userData = await _userDbService.GetAsync(userId);
+                }
+
                 if (userData == null)
                 {
                     return BadRequest("user data is null");
@@ -106,6 +122,7 @@ namespace ar_dashboard.Controllers
                 museum.Artifacts[check] = artifact;
 
                 await _userDbService.UpdateAsync(userId, userData);
+                _cacheController.SetUserData(userId, userData); // save to cache
 
                 var receiveForm = new ClientReceiveArtifact();
                 receiveForm.ArtifactId = artifact.Id;
@@ -129,7 +146,14 @@ namespace ar_dashboard.Controllers
                 IList<Claim> claim = identity.Claims.ToList();
                 var userId = claim[0].Value;
 
-                var userData = await _userDbService.GetAsync(userId);
+                // get from cache first
+                var userData = _cacheController.GetUserData(userId);
+
+                if (userData == null) // if data is not saved in cache, get from db
+                {
+                    userData = await _userDbService.GetAsync(userId);
+                }
+
                 if (userData == null)
                 {
                     return BadRequest("user data is null");
@@ -150,6 +174,7 @@ namespace ar_dashboard.Controllers
                 museum.Artifacts.RemoveAt(index);
 
                 await _userDbService.UpdateAsync(userId, userData);
+                _cacheController.SetUserData(userId, userData); // save to cache
 
                 return Ok();
             }
@@ -185,6 +210,7 @@ namespace ar_dashboard.Controllers
                 museum.Artifacts.Clear();
 
                 await _userDbService.UpdateAsync(userId, userData);
+                _cacheController.SetUserData(userId, userData); // save to cache
 
                 return Ok();
             }

@@ -17,10 +17,12 @@ namespace ar_dashboard.Controllers
     {
         private readonly IUserDbService _userDbService;
         private readonly IConfiguration _configuration;
+        private readonly CacheController _cacheController;
 
-        public UsersController(DatabaseController databaseController, IConfiguration configuration)
+        public UsersController(DatabaseController databaseController, IConfiguration configuration, CacheController cacheController)
         {
             _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
+            _cacheController = cacheController;
             _configuration = configuration;
         }
 
@@ -64,9 +66,15 @@ namespace ar_dashboard.Controllers
 
         private async Task<UserData> GetUserData(string id, string userName, string email, string role)
         {
-            // get from database
-            var user = await _userDbService.GetAsync(id);
-            if(user == null)
+            // get from cache first
+            var user = _cacheController.GetUserData(id);
+
+            if (user == null) // if data is not saved in cache, get from db
+            {
+                user = await _userDbService.GetAsync(id);
+            }
+
+            if (user == null)
             {
                 // user not created in db yet -> create new
                 user = new UserData();
@@ -88,6 +96,7 @@ namespace ar_dashboard.Controllers
             try
             {
                 await _userDbService.UpdateAsync(item.Id, item);
+                _cacheController.SetUserData(item.Id, item); // save to cache
                 return NoContent();
             }
             catch (Exception e)
@@ -110,14 +119,21 @@ namespace ar_dashboard.Controllers
                 {
                     return BadRequest("not valid mode");
                 }
-                // get from database
-                var user = await _userDbService.GetAsync(userId);
+                // get from cache first
+                var user = _cacheController.GetUserData(userId);
+
+                if (user == null) // if data is not saved in cache, get from db
+                {
+                    user = await _userDbService.GetAsync(userId);
+                }
+
                 if (user == null)
                 {
                     return BadRequest("user is null");
                 }
                 user.EditMode = editMode;
                 await _userDbService.UpdateAsync(userId, user);
+                _cacheController.SetUserData(userId, user); // save to cache
                 return Ok();
             }
             catch (Exception e)

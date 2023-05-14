@@ -9,6 +9,9 @@ namespace ar_dashboard.Models.Guest
         [Newtonsoft.Json.JsonProperty(PropertyName = "museumId")]
         public string MuseumId { get; set; }
 
+        [Newtonsoft.Json.JsonProperty(PropertyName = "museumName")]
+        public string MuseumName { get; set; }
+
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 

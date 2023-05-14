@@ -21,10 +21,12 @@ namespace ar_dashboard.Controllers
     public class MuseumsController : ControllerBase
     {
         private readonly IUserDbService _userDbService;
+        private readonly CacheController _cacheController;
 
-        public MuseumsController(DatabaseController databaseController)
+        public MuseumsController(DatabaseController databaseController, CacheController cacheController)
         {
             _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
+            _cacheController = cacheController;
         }
 
         // GET api/museums/5
@@ -37,7 +39,14 @@ namespace ar_dashboard.Controllers
                 var identity = HttpContext.User.Identity as ClaimsIdentity;
                 IList<Claim> claim = identity.Claims.ToList();
                 var userId = claim[0].Value;
-                var userData =  await _userDbService.GetAsync(userId);
+
+                // get from cache first
+                var userData = _cacheController.GetUserData(userId);
+
+                if (userData == null) // if data is not saved in cache, get from db
+                {
+                    userData = await _userDbService.GetAsync(userId);
+                }
 
                 if (userData == null)
                 {
@@ -79,9 +88,15 @@ namespace ar_dashboard.Controllers
                 museum.Address = museumForm.Address;
                 museum.ImageUrl = museumForm.ImageUrl;
 
-                var userData = await _userDbService.GetAsync(userId);
+                // get from cache first
+                var userData = _cacheController.GetUserData(userId);
 
-                if(userData == null)
+                if (userData == null) // if data is not saved in cache, get from db
+                {
+                    userData = await _userDbService.GetAsync(userId);
+                }
+
+                if (userData == null)
                 {
                     return BadRequest("user data is null");
                 }
@@ -90,6 +105,7 @@ namespace ar_dashboard.Controllers
 
                 // save to db
                 await _userDbService.UpdateAsync(userId, userData);
+                _cacheController.SetUserData(userId, userData); // save to cache
                 return Ok(museum);
 
             }
@@ -130,6 +146,7 @@ namespace ar_dashboard.Controllers
                 museum.OpeningTime = museumUpdate.OpeningTime;
 
                 await _userDbService.UpdateAsync(userId, userData);
+                _cacheController.SetUserData(userId, userData); // save to cache
                 return Ok(museum);
             }
             catch (Exception e)
@@ -154,8 +171,14 @@ namespace ar_dashboard.Controllers
                 {
                     return BadRequest("error with parameters");
                 }
-               
-                var userData = await _userDbService.GetAsync(userId);
+
+                // get from cache first
+                var userData = _cacheController.GetUserData(userId);
+
+                if (userData == null) // if data is not saved in cache, get from db
+                {
+                    userData = await _userDbService.GetAsync(userId);
+                }
 
                 if (userData == null)
                 {
@@ -172,6 +195,7 @@ namespace ar_dashboard.Controllers
 
                 // save to db
                 await _userDbService.UpdateAsync(userId, userData);
+                _cacheController.SetUserData(userId, userData); // save to cache
                 return Ok(userData);
 
             }

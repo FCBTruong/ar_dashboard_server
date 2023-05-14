@@ -24,11 +24,13 @@ namespace ar_dashboard.Controllers
         private readonly IUserDbService _userDbService;
         private readonly DatabaseController _databaseController;
         private readonly IConfiguration _configuration;
-        public Asset3DController(DatabaseController databaseController, IConfiguration configuration)
+        private readonly CacheController _cacheController;
+        public Asset3DController(DatabaseController databaseController, IConfiguration configuration, CacheController cacheController)
         {
             _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
             _databaseController = databaseController;
             _configuration = configuration;
+            _cacheController = cacheController;
         }
 
         [Authorize]
@@ -43,7 +45,14 @@ namespace ar_dashboard.Controllers
                 var userId = claim[0].Value;
 
                 // after load success to storage
-                var userData = await _userDbService.GetAsync(userId);
+
+                // get from cache first
+                var userData = _cacheController.GetUserData(userId);
+
+                if (userData == null) // if data is not saved in cache, get from db
+                {
+                    userData = await _userDbService.GetAsync(userId);
+                }
                 if (userData == null)
                 {
                     return BadRequest("user data is null");
@@ -82,6 +91,7 @@ namespace ar_dashboard.Controllers
                     userData.Assets.Add(asset);
 
                     await _userDbService.UpdateAsync(userId, userData);
+                    _cacheController.SetUserData(userId, userData); // save to cache
 
 
                     return Ok(new { asset });
@@ -133,7 +143,15 @@ namespace ar_dashboard.Controllers
                 var userId = claim[0].Value;
 
                 // after load success to storage
-                var userData = await _userDbService.GetAsync(userId);
+
+                // get from cache first
+                var userData = _cacheController.GetUserData(userId);
+
+                if (userData == null) // if data is not saved in cache, get from db
+                {
+                    userData = await _userDbService.GetAsync(userId);
+                }
+
                 if (userData == null)
                 {
                     return BadRequest("user data is null");
@@ -141,6 +159,8 @@ namespace ar_dashboard.Controllers
 
                 userData.Assets.Clear();
                 await _userDbService.UpdateAsync(userId, userData);
+                _cacheController.SetUserData(userId, userData); // save to cache
+
                 return Ok();
             }
             catch (Exception e)
@@ -171,6 +191,7 @@ namespace ar_dashboard.Controllers
                 if (idx == -1) return BadRequest("not found");
                 userData.Assets.RemoveAt(idx);
                 await _userDbService.UpdateAsync(userId, userData);
+                _cacheController.SetUserData(userId, userData); // save to cache
                 return Ok();
             }
             catch (Exception e)

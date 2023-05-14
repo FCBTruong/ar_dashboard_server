@@ -54,7 +54,7 @@ namespace ar_dashboard.Controllers
         [HttpPut]
         [Authorize]
         [Route("request-publish-museum")]
-        public async Task<IActionResult> RequestPublicMuseums(Museum museum)
+        public async Task<IActionResult> RequestPublicMuseums([FromBody] Museum museum)
         {
             try
             {
@@ -215,7 +215,7 @@ namespace ar_dashboard.Controllers
 
                     // tried to find if publiscied
                     var oldPublishedIdx = adminModel.PublicizedMuseums.FindIndex(museum => museum.UserId == userId);
-                    adminModel.PublicizedMuseums.RemoveAt(oldPublishedIdx);
+                    if(oldPublishedIdx != -1) adminModel.PublicizedMuseums.RemoveAt(oldPublishedIdx);
 
                     adminModel.PublicizedMuseums.Add(pendingMuseum);
 
@@ -268,5 +268,44 @@ namespace ar_dashboard.Controllers
                 return StatusCode(500, $"Internel server error: {e}");
             }
         }
+
+        [HttpPut]
+        [Authorize]
+        [Route("delete-published")]
+        public async Task<IActionResult> DeletePublishedMuseum(string userId)
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                IList<Claim> claim = identity.Claims.ToList();
+                var role = ushort.Parse(claim[2].Value);
+                if (role != (ushort)UserRole.ADMIN)
+                {
+                    return Unauthorized("Only admin has right to get list users");
+                }
+
+                var adminModel = _cacheController.GetAdminModel();
+                if (adminModel == null)
+                {
+                    return BadRequest();
+                }
+
+                var idx = adminModel.PublicizedMuseums.FindIndex(museum => museum.UserId == userId);
+
+                if (idx != -1)
+                {
+                    adminModel.PublicizedMuseums.RemoveAt(idx);
+
+                    _cacheController.SetAdminData(adminModel);
+                    await _adminDbService.UpdateAsync(adminModel);
+                }
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internel server error: {e}");
+            }
+        }
+
     }
 }

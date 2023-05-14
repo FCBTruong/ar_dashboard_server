@@ -17,11 +17,13 @@ namespace ar_dashboard.Controllers
         private readonly IUserDbService _userDbService;
         private readonly IAdminDbService _adminDbService;
         private readonly String connectionString;
-        public GuestsController(DatabaseController databaseController, IConfiguration configuration)
+        private readonly CacheController _cacheController;
+        public GuestsController(DatabaseController databaseController, IConfiguration configuration, CacheController cacheController)
         {
             _userDbService = databaseController.UserDbService ?? throw new ArgumentNullException(nameof(databaseController));
             _adminDbService = databaseController.AdminDbService ?? throw new ArgumentNullException(nameof(databaseController));
             connectionString = configuration["AzureFiles:ConnectionString"];
+            _cacheController = cacheController;
         }
 
 
@@ -30,7 +32,14 @@ namespace ar_dashboard.Controllers
         {
             try
             {
-                var userData = await _userDbService.GetAsync(userId);
+                if (userId == "") return BadRequest("Id is empty");
+                // get from cache first
+                var userData = _cacheController.GetUserData(userId);
+
+                if (userData == null) // if data is not saved in cache, get from db
+                {
+                    userData = await _userDbService.GetAsync(userId);
+                }
                 if (userData == null)
                 {
                     return BadRequest("user data is null");
@@ -54,6 +63,7 @@ namespace ar_dashboard.Controllers
                 artifactPackage.Artifact = artifact;
                 artifactPackage.MuseumId = museumId;
                 artifactPackage.Id = artifact.Id;
+                artifactPackage.MuseumName = museum.Name;
 
                 return Ok(artifactPackage);
             }
