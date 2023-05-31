@@ -31,5 +31,16 @@ namespace ar_dashboard.Models.Guest
 
         [Newtonsoft.Json.JsonProperty(PropertyName = "address")]
         public string Address { get; set; }
+
+        [Newtonsoft.Json.JsonProperty(PropertyName = "introduction")]
+        public string Introduction { get; set; }
+
+        [Newtonsoft.Json.JsonProperty(PropertyName = "artifacts")]
+        public List<Artifact> Artifacts { get; set; }
+
+        public PublicMuseum()
+        {
+            Artifacts = new List<Artifact>();
+        }
     }
 }

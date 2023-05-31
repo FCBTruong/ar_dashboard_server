@@ -35,6 +35,7 @@ namespace ar_dashboard.Controllers
         }
 
         [Authorize]
+        [DisableRequestSizeLimit]
         [HttpPost] // should return the link to this resource
         public async Task<ActionResult<FileLoadData>> uploadFile(IFormFile file)
         {

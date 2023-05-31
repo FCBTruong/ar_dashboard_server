@@ -131,6 +131,18 @@ namespace ar_dashboard.Controllers
                     publicMuseum.Address = museum.Address;
                     publicMuseum.OpeningTime = museum.OpeningTime;
                     publicMuseum.ImageUrl = museum.ImageUrl;
+                    publicMuseum.Introduction = museum.Introduction;
+
+                    foreach(Artifact artifact in museum.Artifacts)
+                    {
+                        var publicArtifact = new Artifact();
+                        publicArtifact.Id = artifact.Id;
+                        publicArtifact.Image = artifact.Image;
+                        publicArtifact.Name = artifact.Name;
+
+                        publicMuseum.Artifacts.Add(publicArtifact);
+                    }
+
                     _museumsInformation.Museums.Add(publicMuseum);
                 }
 
